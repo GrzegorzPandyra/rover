@@ -17,7 +17,8 @@ CFG_DIR	= $(PROJECT_ROOT)/cfg
 OUT_DIR	= $(PROJECT_ROOT)/out
 LIB_DIR	= $(PROJECT_ROOT)/lib
 
-APP_MODULES = startup
+APP_MODULES = 	startup \
+				pwm
 
 #assemble list of source files
 SRC_LIST += $(foreach module, $(APP_MODULES), $(wildcard $(APP_DIR)/$(module)/*.cpp))
@@ -52,7 +53,7 @@ p24_rover:
 	$(foreach file, $(INCLUDE_LIST),  $(info $(file)))
 
 	$(info $(NEWLINE))
-	@$(CC) $(SRC_LIST) $(INCLUDE_LIST) $(CFLAGS) $(DEFINES) -o $(OUT_DIR)/$@
+	@$(CC) $(SRC_LIST) $(INCLUDE_LIST) -lwiringPi $(CFLAGS) $(DEFINES) -o $(OUT_DIR)/$@
 	$(info Finished building target: $@)
 	$(info $(NEWLINE))
 
