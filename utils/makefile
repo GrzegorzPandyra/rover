@@ -12,20 +12,25 @@ endef
 
 # Folders
 PROJECT_ROOT=..
-APP_DIR	= $(PROJECT_ROOT)/app
-CFG_DIR	= $(PROJECT_ROOT)/cfg
-OUT_DIR	= $(PROJECT_ROOT)/out
-LIB_DIR	= $(PROJECT_ROOT)/lib
+APP_DIR		= $(PROJECT_ROOT)/app
+OS_DIR		= $(PROJECT_ROOT)/os
+MCAL_DIR	= $(PROJECT_ROOT)/mcal
+OUT_DIR		= $(PROJECT_ROOT)/out
+LIB_DIR		= $(PROJECT_ROOT)/lib
 
-APP_MODULES = 	startup \
-				pwm
+APP_MODULES = \
+dummy_app \
+input_if
 
 #assemble list of source files
+SRC_LIST += $(wildcard $(MCAL_DIR)/*.cpp)
+SRC_LIST += $(wildcard $(OS_DIR)/*.cpp)
 SRC_LIST += $(foreach module, $(APP_MODULES), $(wildcard $(APP_DIR)/$(module)/*.cpp))
 
 #assemble list of include directories
 INCLUDE_LIST += $(foreach module, $(APP_MODULES), -I$(wildcard $(APP_DIR)/$(module)))
-INCLUDE_LIST += -I$(CFG_DIR)
+INCLUDE_LIST += -I$(OS_DIR)
+INCLUDE_LIST += -I$(MCAL_DIR)
 
 #compiler
 CC=g++
@@ -37,10 +42,10 @@ CFLAGS= -Wall -Os #-std=c99 -mmcu=$(MMCU)
 # include ../config/diag_config.cfg
 
 #default rule
-all: clean p24_rover print_ok
+all: clean p26_rover print_ok
 
-#compile project Minisumo IV into .elf file
-p24_rover: 
+#compile project P24 Rover
+p26_rover: 
 	$(info  ********************************************************************************************************* )
 	$(info 	Building target: $@)
 
@@ -53,7 +58,7 @@ p24_rover:
 	$(foreach file, $(INCLUDE_LIST),  $(info $(file)))
 
 	$(info $(NEWLINE))
-	@$(CC) $(SRC_LIST) $(INCLUDE_LIST) -lwiringPi $(CFLAGS) $(DEFINES) -o $(OUT_DIR)/$@
+	@$(CC) $(SRC_LIST) $(INCLUDE_LIST) -lwiringPi -lncurses $(CFLAGS) $(DEFINES) -o $(OUT_DIR)/$@
 	$(info Finished building target: $@)
 	$(info $(NEWLINE))
 
