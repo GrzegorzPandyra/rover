@@ -4,30 +4,48 @@
 #include "os_task.hpp"
 
 /* Add relevant includes here */
+#include "../lib/ncurses.hpp"
+#include "../app/ui/ui_input.hpp"
+#include "../app/ui/ui_monitor.hpp"
 #include "../app/dummy_app/dummy_app.hpp"
-#include "../app/input_if/input_if.hpp"
+#include "../app/light_ctrlr/light_ctrlr.hpp"
+#include "../app/pwtr_drv/pwtr_drv.hpp"
+#include "../app/steer_sys_drv/steer_sys_drv.hpp"
 
 #define OS_TASK_INIT_LIST() /* Add relevant function calls below */\
-                            dummy_app::dummy_app_init(); \
-                            input_if::input_if_init();
+                            ncurses::init(); \
+                            ui_input::init(); \
+                            ui_monitor::init(); \
+                            light_ctrlr::init(); \
+                            pwtr_drv::init(); \
+                            steer_sys_drv::init(); \
+                            dummy_app::dummy_app_init();
 
 #define OS_TASK_1_MS_LIST() /* Add relevant function calls below */\
-                            input_if::input_if_run();
+                            ui_input::run();
 
 #define OS_TASK_5_MS_LIST() /* Add relevant function calls below */\
                             /* Dummy_call() */
 
 #define OS_TASK_10_MS_LIST() /* Add relevant function calls below */\
-                            /* Dummy_call() */
+                            ui_monitor::run(); \
+                            pwtr_drv::run(); \
+                            steer_sys_drv::run(); \
+                            // dummy_app::dummy_app_run2();
 
 #define OS_TASK_100_MS_LIST() /* Add relevant function calls below */\
-                            /* Dummy_call() */
+                            light_ctrlr::run();
+                            
 
 #define OS_TASK_250_MS_LIST() /* Add relevant function calls below */\
-                            dummy_app::dummy_app_run2();
 
 #define OS_TASK_1000_MS_LIST() /* Add relevant function calls below */\
+
+#define OS_TASK_2000_MS_LIST() /* Add relevant function calls below */\
+
+#define OS_TASK_5000_MS_LIST() /* Add relevant function calls below */\
                             dummy_app::dummy_app_run();
+
 
 namespace os_cfg{
     enum Task_Type {
@@ -50,7 +68,9 @@ namespace os_cfg{
         {"OS_TASK_10_MS",   CYCLIC,   10u,   os_task::Task_10ms    },
         {"OS_TASK_100_MS",  CYCLIC,   100u,  os_task::Task_100ms   },
         {"OS_TASK_250_MS",  CYCLIC,   250u,  os_task::Task_250ms   },
-        {"OS_TASK_1000_MS", CYCLIC,   1000u, os_task::Task_1000ms  }
+        {"OS_TASK_1000_MS", CYCLIC,   1000u, os_task::Task_1000ms  },
+        {"OS_TASK_2000_MS", CYCLIC,   2000u, os_task::Task_2000ms  },
+        {"OS_TASK_5000_MS", CYCLIC,   5000u, os_task::Task_5000ms  }
     };
 
     const uint8_t NUM_TASKS = sizeof(OS_TASKS)/sizeof(OS_TASKS[0u]);

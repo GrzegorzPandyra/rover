@@ -29,3 +29,10 @@ void os_task::Task_1000ms(void){
     OS_TASK_1000_MS_LIST()
 }
 
+void os_task::Task_2000ms(void){
+    OS_TASK_2000_MS_LIST()
+}
+
+void os_task::Task_5000ms(void){
+    OS_TASK_5000_MS_LIST()
+}

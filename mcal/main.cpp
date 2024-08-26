@@ -1,16 +1,17 @@
 #include <iostream>
 #include <unistd.h> 
 #include "../os/os_scheduler.hpp"
+#include "../app/ui/ui_logging.hpp"
 
 int main()
 {
-    std::cout << "Rover control program - initializing...\n\r";
+    LOG("Rover control program - initializing...\n");
 
     if(os_scheduler::OS_SCHDLR_INITIALIZED != os_scheduler::Init()){
         return 1;
     }
 
-    std::cout << "Init complete\n\r" << std::endl;
+    LOG("Init complete\n\r");
 
     
     while(1){

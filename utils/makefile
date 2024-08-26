@@ -20,17 +20,22 @@ LIB_DIR		= $(PROJECT_ROOT)/lib
 
 APP_MODULES = \
 dummy_app \
-input_if
+ui \
+light_ctrlr \
+steer_sys_drv \
+pwtr_drv
 
 #assemble list of source files
 SRC_LIST += $(wildcard $(MCAL_DIR)/*.cpp)
 SRC_LIST += $(wildcard $(OS_DIR)/*.cpp)
+SRC_LIST += $(wildcard $(LIB_DIR)/*.cpp)
 SRC_LIST += $(foreach module, $(APP_MODULES), $(wildcard $(APP_DIR)/$(module)/*.cpp))
 
 #assemble list of include directories
 INCLUDE_LIST += $(foreach module, $(APP_MODULES), -I$(wildcard $(APP_DIR)/$(module)))
 INCLUDE_LIST += -I$(OS_DIR)
 INCLUDE_LIST += -I$(MCAL_DIR)
+INCLUDE_LIST += -I$(LIB_DIR)
 
 #compiler
 CC=g++

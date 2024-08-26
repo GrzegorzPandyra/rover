@@ -2,6 +2,7 @@
 #include "os_scheduler.hpp"
 #include "os_cfg.hpp"
 #include <chrono>
+#include "../app/ui/ui_logging.hpp"
 
 using namespace os_scheduler;
 
@@ -18,7 +19,7 @@ OS_Scheduler_Status_T os_scheduler::Init(void){
             os_cfg::OS_TASKS[i].function();
         }
     }
-    std::cout << "OS scheduler initialization successful\n\r";
+    LOG("OS scheduler initialization successful\n");
     return OS_SCHDLR_INITIALIZED;
 }
 
