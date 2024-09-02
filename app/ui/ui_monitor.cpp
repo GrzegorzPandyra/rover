@@ -8,6 +8,7 @@
 #include "../light_ctrlr/light_ctrlr.hpp"
 #include "../pwtr_drv/pwtr_drv.hpp"
 #include "../steer_sys_drv/steer_sys_drv.hpp"
+#include "../veh/veh.hpp"
 
 /*******************  Types and declarations *******************/
 enum Monitor_Id{
@@ -35,7 +36,7 @@ static const Monitor_T monitors[] = {
     {LIGHT_CONTROLLER,  "LIGHT_CONTROLLER", NULL,  light_ctrlr::export_data},
     {POWERTRAIN,        "POWERTRAIN",       NULL,  pwtr_drv::export_data},
     {STEERING_SYSTEM,   "STEERING_SYSTEM",  NULL,  steer_sys_drv::export_data},
-    {VEHICLE,           "VEHICLE",          NULL,  dummy_app::get_mon_data},
+    {VEHICLE,           "VEHICLE",          NULL,  veh::export_data},
     {FAN,               "FAN",              NULL,  dummy_app::get_mon_data},
     {POWER,             "POWER",            NULL,  dummy_app::get_mon_data},
     {DIAGNOSTIC,        "DIAGNOSTIC",       NULL,  dummy_app::get_mon_data},

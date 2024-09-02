@@ -3,6 +3,8 @@
 #include "light_ctrlr.hpp"
 #include "../ui/ui_logging.hpp"
 #include "../../mcal/calib.hpp"
+#include <wiringPi.h>
+#include <softPwm.h>
 
 using namespace light_ctrlr;
 
@@ -14,10 +16,19 @@ static struct Light_Ctrlr_Mgr_T {
 
 void light_ctrlr::init(void){
     LOG("SWC [light_ctrlr] init\n");
+    pinMode(LIGHT_CTRLR_ROOF_LIGHT_PWM, PWM_OUTPUT);
+    pinMode(LIGHT_CTRLR_HEAD_LIGHT_PWM, PWM_OUTPUT);
+
+    digitalWrite(LIGHT_CTRLR_ROOF_LIGHT_PWM, LOW);
+    digitalWrite(LIGHT_CTRLR_HEAD_LIGHT_PWM, LOW);
+
+    softPwmCreate(LIGHT_CTRLR_ROOF_LIGHT_PWM, LIGHT_CTRLR_PWM_MIN_VAL, LIGHT_CTRLR_PWM_MAX_VAL);
+    softPwmCreate(LIGHT_CTRLR_HEAD_LIGHT_PWM, LIGHT_CTRLR_PWM_MIN_VAL, LIGHT_CTRLR_PWM_MAX_VAL);
 }
 
 void light_ctrlr::run(void){
-
+    softPwmWrite(LIGHT_CTRLR_ROOF_LIGHT_PWM, light_ctrlr_mgr.rooflights_pwm);
+    softPwmWrite(LIGHT_CTRLR_HEAD_LIGHT_PWM, light_ctrlr_mgr.headlights_pwm);
 }
 
 void light_ctrlr::set_pwm(uint8_t pwm, Light_T light){

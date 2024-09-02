@@ -6,6 +6,7 @@
 #include "../app/light_ctrlr/light_ctrlr.hpp"
 #include "../app/pwtr_drv/pwtr_drv.hpp"
 #include "../app/steer_sys_drv/steer_sys_drv.hpp"
+#include "../app/veh/veh.hpp"
 
 static void process_input(char input);
 
@@ -44,9 +45,18 @@ static void process_input(char input){
     /* POWERTRAIN DRIVER */
     case UI_KEY_FORWARD:
         pwtr_drv::inc_pwm(PT_DRV_PWM_INC_STEP);
+        pwtr_drv::motor_ctrl(pwtr_drv::FORWARD);
         break;
     case UI_KEY_BACKWARD:
         pwtr_drv::inc_pwm(-PT_DRV_PWM_INC_STEP);
+        pwtr_drv::motor_ctrl(pwtr_drv::REVERSE);
+        break;
+    /* VEHICLE*/
+    case UI_KEY_SHIFT_UP:
+        veh::shift_up();
+        break;
+    case UI_KEY_SHIFT_DOWN:
+        veh::shift_down();
         break;
     /* STEERING SYSTEM */
     case UI_KEY_TURN_RIGHT:

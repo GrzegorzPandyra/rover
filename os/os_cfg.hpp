@@ -5,6 +5,7 @@
 
 /* Add relevant includes here */
 #include "../lib/ncurses.hpp"
+#include "../lib/wiringpi.hpp"
 #include "../app/ui/ui_input.hpp"
 #include "../app/ui/ui_monitor.hpp"
 #include "../app/dummy_app/dummy_app.hpp"
@@ -14,6 +15,7 @@
 
 #define OS_TASK_INIT_LIST() /* Add relevant function calls below */\
                             ncurses::init(); \
+                            wiringpi::init(); \
                             ui_input::init(); \
                             ui_monitor::init(); \
                             light_ctrlr::init(); \

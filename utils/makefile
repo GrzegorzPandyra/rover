@@ -23,7 +23,8 @@ dummy_app \
 ui \
 light_ctrlr \
 steer_sys_drv \
-pwtr_drv
+pwtr_drv \
+veh
 
 #assemble list of source files
 SRC_LIST += $(wildcard $(MCAL_DIR)/*.cpp)

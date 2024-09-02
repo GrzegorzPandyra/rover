@@ -12,19 +12,33 @@ const uint8_t SS_DRV_PWM_INC_STEP = 5u;
 const uint8_t SS_DRV_PWM_DEF_VAL = (SS_DRV_MAX_PWM_VAL - SS_DRV_MIN_PWM_VAL)/2u + SS_DRV_MIN_PWM_VAL;
 
 /* Powertrain Driver */
-const uint8_t PT_DRV_DC_MOTOR_1_A = 27u;
-const uint8_t PT_DRV_DC_MOTOR_1_B = 22u;
-const uint8_t PT_DRV_DC_MOTOR_1_PWM = 17u;
-const uint8_t PT_DRV_DC_MOTOR_2_A = 20u;
-const uint8_t PT_DRV_DC_MOTOR_2_B = 16u;
-const uint8_t PT_DRV_DC_MOTOR_2_PWM = 21u;
+const uint8_t PT_DRV_DC_MOTOR_A = 6u;
+const uint8_t PT_DRV_DC_MOTOR_B = 13u;
+const uint8_t PT_DRV_DC_MOTOR_PWM = 19u;
 const uint8_t PT_DRV_PWM_INC_STEP = 5u;
 const uint8_t PT_DRV_PWM_DEF_VAL = 0u;
 const uint8_t PT_DRV_PWM_MIN_VAL = 0u;
 const uint8_t PT_DRV_PWM_MAX_VAL = 100u;
 
+const uint8_t PT_DRV_GEAR_R3_PWM_MAX = 100u;
+const uint8_t PT_DRV_GEAR_R3_PWM_MIN = 71u;
+const uint8_t PT_DRV_GEAR_R2_PWM_MAX = 70u;
+const uint8_t PT_DRV_GEAR_R2_PWM_MIN = 31u;
+const uint8_t PT_DRV_GEAR_R1_PWM_MAX = 30u;
+const uint8_t PT_DRV_GEAR_R1_PWM_MIN = 1u;
+const uint8_t PT_DRV_GEAR_N_PWM      = 0u;
+const uint8_t PT_DRV_GEAR_D1_PWM_MIN = 1u;
+const uint8_t PT_DRV_GEAR_D1_PWM_MAX = 30u;
+const uint8_t PT_DRV_GEAR_D2_PWM_MIN = 31u;
+const uint8_t PT_DRV_GEAR_D2_PWM_MAX = 70u;
+const uint8_t PT_DRV_GEAR_D3_PWM_MIN = 71u;
+const uint8_t PT_DRV_GEAR_D3_PWM_MAX = 100u;
+
+const uint8_t PT_DRV_FAN_PWM = 26u;
+
 /* Light Driver*/
-const uint8_t LIGHT_CTRLR_PWM_PIN = 26u;
+const uint8_t LIGHT_CTRLR_ROOF_LIGHT_PWM = 16u;
+const uint8_t LIGHT_CTRLR_HEAD_LIGHT_PWM = 12u;
 const uint8_t LIGHT_CTRLR_PWM_STEP = 10u;
 const uint8_t LIGHT_CTRLR_PWM_DEF_VAL = 0u;
 const uint8_t LIGHT_CTRLR_PWM_MIN_VAL = 0u;
@@ -41,8 +55,11 @@ const char UI_KEY_ROOFLIGHT_PWM_DEC = '/';
 const char UI_KEY_REARLIGHT_PWM_INC = ',';
 const char UI_KEY_REARLIGHT_PWM_DEC = '0';
 
-const char UI_KEY_FAN_PWM_INC = 0x55 /* KEY_PAGE_UP */;
-const char UI_KEY_FAN_PWM_DEC = 0x56 /* KEY_PAGE_DOWN */;
+const char UI_KEY_FAN_PWM_INC = ']';
+const char UI_KEY_FAN_PWM_DEC = '[';
+
+const char UI_KEY_SHIFT_UP   = 'r';
+const char UI_KEY_SHIFT_DOWN = 'f';
 
 const char UI_KEY_FORWARD    = 'w'; /* KEY_UP */
 const char UI_KEY_BACKWARD   = 's'; /* KEY_DOWN */
