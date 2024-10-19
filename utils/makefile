@@ -24,7 +24,8 @@ ui \
 light_ctrlr \
 steer_sys_drv \
 pwtr_drv \
-veh
+veh \
+buzzer
 
 #assemble list of source files
 SRC_LIST += $(wildcard $(MCAL_DIR)/*.cpp)

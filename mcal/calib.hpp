@@ -66,7 +66,9 @@ const char UI_KEY_BACKWARD   = 's'; /* KEY_DOWN */
 const char UI_KEY_TURN_RIGHT = 'd'; /* KEY_LEFT */
 const char UI_KEY_TURN_LEFT  = 'a'; /* KEY_RIGHT */
 
-
+/* Buzzer */
+const char BUZZ_PIN = 14u;
+const char BUZZ_TASK_PERIOD_MS = 100u;
 
 /* User interface layout */
 const uint8_t LIGHTS_WIN_HEIGHT = 10u;

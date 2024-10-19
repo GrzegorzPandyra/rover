@@ -12,6 +12,7 @@
 #include "../app/light_ctrlr/light_ctrlr.hpp"
 #include "../app/pwtr_drv/pwtr_drv.hpp"
 #include "../app/steer_sys_drv/steer_sys_drv.hpp"
+#include "../app/buzzer/buzzer.hpp"
 
 #define OS_TASK_INIT_LIST() /* Add relevant function calls below */\
                             ncurses::init(); \
@@ -21,7 +22,9 @@
                             light_ctrlr::init(); \
                             pwtr_drv::init(); \
                             steer_sys_drv::init(); \
-                            dummy_app::dummy_app_init();
+                            dummy_app::dummy_app_init(); \
+                            buzzer::init(); \
+                            buzzer::buzz(100);
 
 #define OS_TASK_1_MS_LIST() /* Add relevant function calls below */\
                             ui_input::run();
@@ -33,6 +36,7 @@
                             ui_monitor::run(); \
                             pwtr_drv::run(); \
                             steer_sys_drv::run(); \
+                            buzzer::run();
                             // dummy_app::dummy_app_run2();
 
 #define OS_TASK_100_MS_LIST() /* Add relevant function calls below */\
@@ -46,7 +50,8 @@
 #define OS_TASK_2000_MS_LIST() /* Add relevant function calls below */\
 
 #define OS_TASK_5000_MS_LIST() /* Add relevant function calls below */\
-                            dummy_app::dummy_app_run();
+                            dummy_app::dummy_app_run(); \
+                            buzzer::buzz(50);
 
 
 namespace os_cfg{
