@@ -13,6 +13,8 @@
 #include "../app/pwtr_drv/pwtr_drv.hpp"
 #include "../app/steer_sys_drv/steer_sys_drv.hpp"
 #include "../app/buzzer/buzzer.hpp"
+#include "../app/tacho/tacho.hpp"
+#include "../app/veh/veh.hpp"
 
 #define OS_TASK_INIT_LIST() /* Add relevant function calls below */\
                             ncurses::init(); \
@@ -24,10 +26,13 @@
                             steer_sys_drv::init(); \
                             dummy_app::dummy_app_init(); \
                             buzzer::init(); \
+                            tacho::init(); \
+                            veh::init(); \
                             buzzer::buzz(100);
 
 #define OS_TASK_1_MS_LIST() /* Add relevant function calls below */\
-                            ui_input::run();
+                            ui_input::run(); \
+                            tacho::run();
 
 #define OS_TASK_5_MS_LIST() /* Add relevant function calls below */\
                             /* Dummy_call() */
@@ -36,7 +41,8 @@
                             ui_monitor::run(); \
                             pwtr_drv::run(); \
                             steer_sys_drv::run(); \
-                            buzzer::run();
+                            buzzer::run(); \
+                            veh::run();
                             // dummy_app::dummy_app_run2();
 
 #define OS_TASK_100_MS_LIST() /* Add relevant function calls below */\

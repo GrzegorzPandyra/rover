@@ -70,6 +70,11 @@ const char UI_KEY_TURN_LEFT  = 'a'; /* KEY_RIGHT */
 const char BUZZ_PIN = 14u;
 const char BUZZ_TASK_PERIOD_MS = 100u;
 
+/* Tachometer */
+const char TACHO_PIN = 15u;
+const char TACHO_TASK_PERIOD_MS = 1u;
+const char TACHO_NUM_BOARD_SLOTS = 40u;
+
 /* User interface layout */
 const uint8_t LIGHTS_WIN_HEIGHT = 10u;
 const uint8_t LIGHTS_WIN_WIDTH = 40u;

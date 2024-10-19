@@ -38,10 +38,3 @@ void buzzer::run(void){
         digitalWrite(BUZZ_PIN, HIGH);
     }
 }
-
-std::vector<std::string> buzzer::get_mon_data(void){
-    std::vector<std::string> result;
-    result.push_back("=== OFFLINE ===");
-    result.push_back("=== OFFLINE ===");
-    return result;
-}

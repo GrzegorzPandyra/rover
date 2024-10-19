@@ -2,12 +2,13 @@
 #include <vector>
 #include "veh.hpp"
 #include "../ui/ui_logging.hpp"
+#include "../tacho/tacho.hpp"
 
 using namespace veh;
 
 static struct {
     PRND_T prnd;
-    uint8_t speed;
+    float rps;
 } veh_mgr;
 
 void veh::init(void){
@@ -15,7 +16,7 @@ void veh::init(void){
 }
 
 void veh::run(void){
-
+    veh_mgr.rps = tacho::get_speed();
 }
 
 void veh::shift_up(void){
@@ -39,8 +40,7 @@ std::vector<std::string> veh::export_data(void){
     const int PRND_ENUM_OFFSET = 3; /* offset negative PRND values */
     result.push_back("PRND");
     result.push_back(prnd_strings[(int)veh_mgr.prnd+PRND_ENUM_OFFSET]);
-    result.push_back("Speed");
-    // result.push_back(std::to_string(veh_mgr.speed).c_str());
-    result.push_back("OFFLINE");
+    result.push_back("RPS");
+    result.push_back(std::to_string(veh_mgr.rps));
     return result;
 }
