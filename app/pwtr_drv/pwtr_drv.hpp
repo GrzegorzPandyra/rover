@@ -2,6 +2,7 @@
 #define PWTR_DRV_H
 
 #include <vector>
+#include "../../class/pwm_channel/pwm_channel.hpp"
 
 namespace pwtr_drv{
 
@@ -13,10 +14,10 @@ namespace pwtr_drv{
 
     void init(void);
     void run(void);
-    void set_pwm(uint8_t pwm);
-    void inc_pwm(int8_t pwm);
-    uint8_t get_pwm(void);
-    void motor_ctrl(Motor_Dir_T dir);
+    void expire_pwm(void);
+    void toggle_pwm_dec(void);
+    void toggle_hardstart(void);
+    PWM_Channel& pwm(void);
     std::vector<std::string> export_data(void);
     
 }

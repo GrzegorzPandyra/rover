@@ -12,6 +12,7 @@
 #include "../app/light_ctrlr/light_ctrlr.hpp"
 #include "../app/pwtr_drv/pwtr_drv.hpp"
 #include "../app/steer_sys_drv/steer_sys_drv.hpp"
+#include "../app/fan_ctrl/fan_ctrl.hpp"
 #include "../app/buzzer/buzzer.hpp"
 #include "../app/tacho/tacho.hpp"
 #include "../app/veh/veh.hpp"
@@ -28,7 +29,8 @@
                             buzzer::init(); \
                             tacho::init(); \
                             veh::init(); \
-                            buzzer::buzz(100);
+                            fan_ctrl::init(); \
+                            buzzer::buzz(50);
 
 #define OS_TASK_1_MS_LIST() /* Add relevant function calls below */\
                             ui_input::run(); \
@@ -40,6 +42,7 @@
 #define OS_TASK_10_MS_LIST() /* Add relevant function calls below */\
                             ui_monitor::run(); \
                             pwtr_drv::run(); \
+                            fan_ctrl::run(); \
                             steer_sys_drv::run(); \
                             buzzer::run(); \
                             veh::run();
@@ -51,13 +54,15 @@
 
 #define OS_TASK_250_MS_LIST() /* Add relevant function calls below */\
 
+#define OS_TASK_500_MS_LIST() /* Add relevant function calls below */\
+                            pwtr_drv::expire_pwm();
+
 #define OS_TASK_1000_MS_LIST() /* Add relevant function calls below */\
 
 #define OS_TASK_2000_MS_LIST() /* Add relevant function calls below */\
 
 #define OS_TASK_5000_MS_LIST() /* Add relevant function calls below */\
-                            dummy_app::dummy_app_run(); \
-                            buzzer::buzz(50);
+                            dummy_app::dummy_app_run();
 
 
 namespace os_cfg{
@@ -81,6 +86,7 @@ namespace os_cfg{
         {"OS_TASK_10_MS",   CYCLIC,   10u,   os_task::Task_10ms    },
         {"OS_TASK_100_MS",  CYCLIC,   100u,  os_task::Task_100ms   },
         {"OS_TASK_250_MS",  CYCLIC,   250u,  os_task::Task_250ms   },
+        {"OS_TASK_500_MS",  CYCLIC,   500u,  os_task::Task_500ms   },
         {"OS_TASK_1000_MS", CYCLIC,   1000u, os_task::Task_1000ms  },
         {"OS_TASK_2000_MS", CYCLIC,   2000u, os_task::Task_2000ms  },
         {"OS_TASK_5000_MS", CYCLIC,   5000u, os_task::Task_5000ms  }

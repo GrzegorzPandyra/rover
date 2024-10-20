@@ -8,11 +8,11 @@
 
 using namespace light_ctrlr;
 
-static struct Light_Ctrlr_Mgr_T {
+static struct {
     uint8_t headlights_pwm;
     uint8_t rooflights_pwm;
     uint8_t rearlights_pwm;
-} light_ctrlr_mgr;
+} mgr;
 
 void light_ctrlr::init(void){
     LOG("SWC [light_ctrlr] init\n");
@@ -27,21 +27,21 @@ void light_ctrlr::init(void){
 }
 
 void light_ctrlr::run(void){
-    softPwmWrite(LIGHT_CTRLR_ROOF_LIGHT_PWM, light_ctrlr_mgr.rooflights_pwm);
-    softPwmWrite(LIGHT_CTRLR_HEAD_LIGHT_PWM, light_ctrlr_mgr.headlights_pwm);
+    softPwmWrite(LIGHT_CTRLR_ROOF_LIGHT_PWM, mgr.rooflights_pwm);
+    softPwmWrite(LIGHT_CTRLR_HEAD_LIGHT_PWM, mgr.headlights_pwm);
 }
 
 void light_ctrlr::set_pwm(uint8_t pwm, Light_T light){
     uint8_t * pwm_ptr = NULL;
     switch (light){
     case HEADLIGHT :
-        pwm_ptr = &light_ctrlr_mgr.headlights_pwm;
+        pwm_ptr = &mgr.headlights_pwm;
         break;
     case ROOFLIGHT :
-        pwm_ptr = &light_ctrlr_mgr.rooflights_pwm;
+        pwm_ptr = &mgr.rooflights_pwm;
         break;
     case REARLIGHT :
-        pwm_ptr = &light_ctrlr_mgr.rearlights_pwm;
+        pwm_ptr = &mgr.rearlights_pwm;
         break;
     default:
         /* pwm_ptr == NULL */
@@ -62,13 +62,13 @@ void light_ctrlr::inc_pwm(int8_t pwm, Light_T light){
     uint8_t * pwm_ptr = NULL;
     switch (light){
     case HEADLIGHT :
-        pwm_ptr = &light_ctrlr_mgr.headlights_pwm;
+        pwm_ptr = &mgr.headlights_pwm;
         break;
     case ROOFLIGHT :
-        pwm_ptr = &light_ctrlr_mgr.rooflights_pwm;
+        pwm_ptr = &mgr.rooflights_pwm;
         break;
     case REARLIGHT :
-        pwm_ptr = &light_ctrlr_mgr.rearlights_pwm;
+        pwm_ptr = &mgr.rearlights_pwm;
         break;
     default:
         /* pwm_ptr == NULL */
@@ -89,13 +89,13 @@ uint8_t light_ctrlr::get_pwm(Light_T light){
     uint8_t result = 0;
     switch (light){
     case HEADLIGHT :
-        result = light_ctrlr_mgr.headlights_pwm;
+        result = mgr.headlights_pwm;
         break;
     case ROOFLIGHT :
-        result = light_ctrlr_mgr.rooflights_pwm;
+        result = mgr.rooflights_pwm;
         break;
     case REARLIGHT :
-        result = light_ctrlr_mgr.rearlights_pwm;
+        result = mgr.rearlights_pwm;
         break;
     
     default:
@@ -108,10 +108,10 @@ std::vector<std::string> light_ctrlr::export_data(void){
     std::vector<std::string> result;
     /* Result has to be property-value pair */
     result.push_back("Headlights PWM");
-    result.push_back(std::to_string(light_ctrlr_mgr.headlights_pwm));
+    result.push_back(std::to_string(mgr.headlights_pwm));
     result.push_back("Roadlights PWM");
-    result.push_back(std::to_string(light_ctrlr_mgr.rooflights_pwm));
+    result.push_back(std::to_string(mgr.rooflights_pwm));
     result.push_back("Rearlights PWM");
-    result.push_back(std::to_string(light_ctrlr_mgr.rearlights_pwm));
+    result.push_back(std::to_string(mgr.rearlights_pwm));
     return result;
 }

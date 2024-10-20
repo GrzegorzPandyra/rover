@@ -2,6 +2,7 @@
 #define STEER_SYS_DRV_H
 
 #include <vector>
+#include "../../class/pwm_channel/pwm_channel.hpp"
 
 namespace steer_sys_drv{
     struct Servo_Pwm_T {
@@ -11,9 +12,8 @@ namespace steer_sys_drv{
 
     void init(void);
     void run(void);
-    void set_pwm(uint8_t pwm);
-    void inc_pwm(int8_t pwm);
-    Servo_Pwm_T get_pwm(void);
+    PWM_Channel& left_servo_pwm(void);
+    PWM_Channel& right_servo_pwm(void);
     std::vector<std::string> export_data(void);
 }
 

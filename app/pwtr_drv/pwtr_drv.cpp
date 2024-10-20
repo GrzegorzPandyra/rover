@@ -1,140 +1,110 @@
 #include <iostream>
 #include <vector>
-#include <wiringPi.h>
-#include <softPwm.h> 
 #include "pwtr_drv.hpp"
+#include <wiringPi.h>
 #include "../ui/ui_logging.hpp"
 #include "../../mcal/calib.hpp"
 #include "../veh/veh.hpp"
+#include "../tacho/tacho.hpp"
+#include "../fan_ctrl/fan_ctrl.hpp"
 
-static void update_pwm_range(void);
+static void motor_rotation(void);
 
 using namespace pwtr_drv;
 
 static struct {
-    uint8_t motor_pwm;
-    uint8_t max_allowed_pwm;
-    uint8_t min_allowed_pwm;
-} pwtr_drv_mgr;
+    PWM_Channel motor_pwm = PWM_Channel(
+        PT_DRV_DC_MOTOR_PWM,
+        PT_DRV_PWM_MIN_VAL,
+        PT_DRV_PWM_MAX_VAL,
+        PT_DRV_PWM_DEF_VAL,
+        PT_DRV_PWM_INC_STEP
+    );
+    bool hardstart;
+    uint16_t hardstart_timer;
+    bool pwm_auto_dec;
+} mgr;
 
 void pwtr_drv::init(void){
     pinMode(PT_DRV_DC_MOTOR_A, OUTPUT);
     pinMode(PT_DRV_DC_MOTOR_B, OUTPUT);
-    pinMode(PT_DRV_DC_MOTOR_PWM, PWM_OUTPUT);
-    pinMode(PT_DRV_FAN_PWM, PWM_OUTPUT);
 
     digitalWrite(PT_DRV_DC_MOTOR_A, LOW);
     digitalWrite(PT_DRV_DC_MOTOR_B, LOW);
 
-    softPwmCreate(PT_DRV_DC_MOTOR_PWM, PT_DRV_PWM_MIN_VAL, PT_DRV_PWM_MAX_VAL);
-    softPwmCreate(PT_DRV_FAN_PWM, PT_DRV_PWM_MIN_VAL, PT_DRV_PWM_MAX_VAL);
-    
-    
+    mgr.motor_pwm.Init();
+
+    mgr.hardstart = FALSE;
+    mgr.pwm_auto_dec = TRUE;
 
     LOG("SWC [pwtr_drv] init\n");
 }
 
 void pwtr_drv::run(void){
-    update_pwm_range();
-    softPwmWrite(PT_DRV_DC_MOTOR_PWM, pwtr_drv_mgr.motor_pwm);
-    softPwmWrite(PT_DRV_FAN_PWM, PT_DRV_PWM_MAX_VAL);
+    motor_rotation();
+    mgr.motor_pwm.Run();
+    // if(mgr.hardstart && (mgr.hardstart_timer > 0u)){
+    //     softPwmWrite(PT_DRV_DC_MOTOR_PWM, PT_HARDSTART_PWM);
+    //     mgr.hardstart_timer -= PT_TASK_PERIOD_MS;
+    // } else {
+    //     softPwmWrite(PT_DRV_DC_MOTOR_PWM, mgr.motor_pwm);
+    // }
+    // if(tacho::get_speed() < PT_HARDSTART_RPS_THRESHOLD){
+    //     mgr.hardstart_timer = PT_HARDSTART_PERIOD_MS;
+    // }
+
 }
 
-void pwtr_drv::set_pwm(uint8_t pwm){
-    /* Check PWM range */
-    if(pwtr_drv_mgr.min_allowed_pwm > pwm) {
-        pwtr_drv_mgr.motor_pwm = pwtr_drv_mgr.min_allowed_pwm;
-    } else if(pwtr_drv_mgr.max_allowed_pwm < pwm) {
-        pwtr_drv_mgr.motor_pwm = pwtr_drv_mgr.max_allowed_pwm;
-    } else {
-        pwtr_drv_mgr.motor_pwm = pwm;
+void pwtr_drv::expire_pwm(void){
+    if(mgr.pwm_auto_dec){
+        mgr.motor_pwm.Dec();
     }
 }
 
-void pwtr_drv::inc_pwm(int8_t pwm){
-    /* Invert PWM value when moving backward */
-    veh::PRND_T gear = veh::get_gear();
-    if((gear == veh::R1) || (gear == veh::R2) || (gear == veh::R3)){
-        pwm = -pwm;
-    }
-
-    /* Check PWM range */
-    if(pwtr_drv_mgr.min_allowed_pwm > (int8_t)(pwtr_drv_mgr.motor_pwm + pwm)){
-        pwtr_drv_mgr.motor_pwm = pwtr_drv_mgr.min_allowed_pwm;
-    } else if(pwtr_drv_mgr.max_allowed_pwm < (int8_t)(pwtr_drv_mgr.motor_pwm + pwm)) {
-        pwtr_drv_mgr.motor_pwm = pwtr_drv_mgr.max_allowed_pwm;
-    } else {
-        pwtr_drv_mgr.motor_pwm += pwm;
-    }
+PWM_Channel& pwtr_drv::pwm(void){
+    return mgr.motor_pwm;
 }
 
-uint8_t pwtr_drv::get_pwm(void){
-    return pwtr_drv_mgr.motor_pwm;
+void pwtr_drv::toggle_pwm_dec(void){
+    mgr.pwm_auto_dec = !mgr.pwm_auto_dec;
 }
 
-void pwtr_drv::motor_ctrl(Motor_Dir_T dir){
-    switch (dir){
-        case FORWARD:
-            digitalWrite(PT_DRV_DC_MOTOR_A, HIGH);
-            digitalWrite(PT_DRV_DC_MOTOR_B, LOW);
-            break;
-        case REVERSE:
-            digitalWrite(PT_DRV_DC_MOTOR_A, LOW);
-            digitalWrite(PT_DRV_DC_MOTOR_B, HIGH);
-            break;
-        case STOP:
-            digitalWrite(PT_DRV_DC_MOTOR_A, LOW);
-            digitalWrite(PT_DRV_DC_MOTOR_B, LOW);
-            break;
-        default:
-            break;
-    }
+void pwtr_drv::toggle_hardstart(void){
+    mgr.hardstart = !mgr.hardstart;
 }
 
 std::vector<std::string> pwtr_drv::export_data(void){
     std::vector<std::string> result;
     /* Result has to be property-value pair */
     result.push_back("Motor PWM");
-    result.push_back(std::to_string(pwtr_drv_mgr.motor_pwm));
+    result.push_back(std::to_string(mgr.motor_pwm.Get()));
+    result.push_back("PWM auto decrementation");
+    result.push_back(std::to_string(mgr.pwm_auto_dec));
+    result.push_back("Hardstart");
+    result.push_back(std::to_string(mgr.hardstart));
+    result.push_back("Fan PWM");
+    result.push_back(std::to_string(fan_ctrl::pwm().Get()));
     return result;
 }
 
-static void update_pwm_range(void){
-    veh::PRND_T gear = veh::get_gear();
-    switch (gear){
-    case veh::R3 :
-        pwtr_drv_mgr.min_allowed_pwm = PT_DRV_GEAR_R3_PWM_MIN;
-        pwtr_drv_mgr.max_allowed_pwm = PT_DRV_GEAR_R3_PWM_MAX;
-        break;
-    case veh::R2 :
-        pwtr_drv_mgr.min_allowed_pwm = PT_DRV_GEAR_R2_PWM_MIN;
-        pwtr_drv_mgr.max_allowed_pwm = PT_DRV_GEAR_R2_PWM_MAX;
-        break;
-    case veh::R1 :
-        pwtr_drv_mgr.min_allowed_pwm = PT_DRV_GEAR_R1_PWM_MIN;
-        pwtr_drv_mgr.max_allowed_pwm = PT_DRV_GEAR_R1_PWM_MAX;
-        break;
-    case veh::N :
-        pwtr_drv_mgr.min_allowed_pwm = PT_DRV_GEAR_N_PWM;
-        pwtr_drv_mgr.max_allowed_pwm = PT_DRV_GEAR_N_PWM;
-        break;
-    case veh::D1 :
-        pwtr_drv_mgr.min_allowed_pwm = PT_DRV_GEAR_D1_PWM_MIN;
-        pwtr_drv_mgr.max_allowed_pwm = PT_DRV_GEAR_D1_PWM_MAX;
-        break;
-    case veh::D2 :
-        pwtr_drv_mgr.min_allowed_pwm = PT_DRV_GEAR_D2_PWM_MIN;
-        pwtr_drv_mgr.max_allowed_pwm = PT_DRV_GEAR_D2_PWM_MAX;
-        break;
-    case veh::D3 :
-        pwtr_drv_mgr.min_allowed_pwm = PT_DRV_GEAR_D3_PWM_MIN;
-        pwtr_drv_mgr.max_allowed_pwm = PT_DRV_GEAR_D3_PWM_MAX;
-        break;
-    default:
-        pwtr_drv_mgr.min_allowed_pwm = PT_DRV_GEAR_N_PWM;
-        pwtr_drv_mgr.max_allowed_pwm = PT_DRV_GEAR_N_PWM;
-        break;
+static void motor_rotation(void){
+    switch (veh::get_gear()){
+        case veh::PRND_D1:
+        case veh::PRND_D2:
+        case veh::PRND_D3:
+            digitalWrite(PT_DRV_DC_MOTOR_A, HIGH);
+            digitalWrite(PT_DRV_DC_MOTOR_B, LOW);
+            break;
+        case veh::PRND_R:
+            digitalWrite(PT_DRV_DC_MOTOR_A, LOW);
+            digitalWrite(PT_DRV_DC_MOTOR_B, HIGH);
+            break;
+        case veh::PRND_N:
+        default:
+            digitalWrite(PT_DRV_DC_MOTOR_A, LOW);
+            digitalWrite(PT_DRV_DC_MOTOR_B, LOW);
+            mgr.motor_pwm.Set(PT_DRV_PWM_DEF_VAL);
+            break;
+            break;
     }
-    /* Update PWM based on current gear */
-    inc_pwm(0);
 }

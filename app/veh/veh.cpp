@@ -9,38 +9,42 @@ using namespace veh;
 static struct {
     PRND_T prnd;
     float rps;
-} veh_mgr;
+} mgr;
 
 void veh::init(void){
     LOG("SWC [veh] init\n");
+    mgr.prnd = PRND_N;
 }
 
 void veh::run(void){
-    veh_mgr.rps = tacho::get_speed();
+    mgr.rps = tacho::get_speed();
 }
 
 void veh::shift_up(void){
-    if(D3 > veh_mgr.prnd){
-        veh_mgr.prnd = static_cast<PRND_T>(static_cast<int>(veh_mgr.prnd) + 1);
+    if(PRND_D3 > mgr.prnd){
+        mgr.prnd = static_cast<PRND_T>(static_cast<int>(mgr.prnd) + 1);
     }
 }
 void veh::shift_down(void){
-    if(R3 < veh_mgr.prnd){
-        veh_mgr.prnd = static_cast<PRND_T>(static_cast<int>(veh_mgr.prnd) - 1);
+    if(PRND_R < mgr.prnd){
+        mgr.prnd = static_cast<PRND_T>(static_cast<int>(mgr.prnd) - 1);
     }
 }
 
 PRND_T veh::get_gear(void){
-    return veh_mgr.prnd;
+    return mgr.prnd;
+}
+
+void veh::set_gear(PRND_T gear){
+    mgr.prnd = gear;
 }
 
 std::vector<std::string> veh::export_data(void){
     std::vector<std::string> result;
-    char* prnd_strings[] = {"R3", "R2", "R1", "N", "D1", "D2", "D3"};
-    const int PRND_ENUM_OFFSET = 3; /* offset negative PRND values */
+    const char PRND_STR[][3] = {"R", "N", "D1", "D2", "D3"};
     result.push_back("PRND");
-    result.push_back(prnd_strings[(int)veh_mgr.prnd+PRND_ENUM_OFFSET]);
+    result.push_back(PRND_STR[mgr.prnd]);
     result.push_back("RPS");
-    result.push_back(std::to_string(veh_mgr.rps));
+    result.push_back(std::to_string(mgr.rps).substr(0, 4));
     return result;
 }

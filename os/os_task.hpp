@@ -8,6 +8,7 @@ namespace os_task {
     void Task_10ms(void);
     void Task_100ms(void);
     void Task_250ms(void);
+    void Task_500ms(void);
     void Task_1000ms(void);
     void Task_2000ms(void);
     void Task_5000ms(void);

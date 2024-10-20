@@ -14,7 +14,7 @@ using namespace buzzer;
 
 static struct {
     uint16_t counter;
-} buzzer_mgr;
+} mgr;
 
 void buzzer::init(void){
     LOG("SWC [buzzer] init\n");
@@ -23,16 +23,16 @@ void buzzer::init(void){
 }
 
 void buzzer::buzz(uint16_t time_ms){
-    buzzer_mgr.counter = time_ms;
+    mgr.counter = time_ms;
 }
 
 void buzzer::run(void){
-    if(buzzer_mgr.counter > 0){
+    if(mgr.counter > 0){
         digitalWrite(BUZZ_PIN, LOW);
-        if(buzzer_mgr.counter >= BUZZ_TASK_PERIOD_MS){
-            buzzer_mgr.counter -= BUZZ_TASK_PERIOD_MS;
+        if(mgr.counter >= BUZZ_TASK_PERIOD_MS){
+            mgr.counter -= BUZZ_TASK_PERIOD_MS;
         } else {
-            buzzer_mgr.counter = 0u;
+            mgr.counter = 0u;
         }
     } else {
         digitalWrite(BUZZ_PIN, HIGH);

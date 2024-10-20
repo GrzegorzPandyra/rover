@@ -17,28 +17,28 @@ static struct {
     uint16_t tacho_counter;
     uint16_t period;
     bool last_status;
-} tacho_mgr;
+} mgr;
 
 void tacho::init(void){
     LOG("SWC [tacho] init\n");
     pinMode(TACHO_PIN, INPUT);
 }
 
-float tacho::get_speed(void){
-    return tacho_mgr.rps;
-}
-
 void tacho::run(void){
     bool status = digitalRead(TACHO_PIN);
-    if(status != tacho_mgr.last_status){
-        tacho_mgr.tacho_counter++;
+    if(status != mgr.last_status){
+        mgr.tacho_counter++;
     }
-    tacho_mgr.last_status = status;
-    tacho_mgr.period += TACHO_TASK_PERIOD_MS;
+    mgr.last_status = status;
+    mgr.period += TACHO_TASK_PERIOD_MS;
 
-    if(tacho_mgr.period == PERIOD_1000_MS){
-        tacho_mgr.rps = tacho_mgr.tacho_counter;
-        tacho_mgr.tacho_counter = 0u;
-        tacho_mgr.period = 0u;
+    if(mgr.period == PERIOD_1000_MS){
+        mgr.rps = (float)mgr.tacho_counter/(float)TACHO_NUM_BOARD_SLOTS;
+        mgr.tacho_counter = 0u;
+        mgr.period = 0u;
     }
+}
+
+float tacho::get_speed(void){
+    return mgr.rps;
 }
