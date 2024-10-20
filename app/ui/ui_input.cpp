@@ -36,22 +36,22 @@ static void process_input(char input){
     switch (input){
     /* LIGHT CONTROLLER*/
     case UI_KEY_HEADLIGHT_PWM_INC:
-        light_ctrlr::inc_pwm(LIGHT_CTRLR_PWM_STEP, light_ctrlr::HEADLIGHT);
+        light_ctrlr::headlight_pwm().Inc();
         break;
     case UI_KEY_HEADLIGHT_PWM_DEC:
-        light_ctrlr::inc_pwm(-LIGHT_CTRLR_PWM_STEP, light_ctrlr::HEADLIGHT);
+        light_ctrlr::headlight_pwm().Dec();
         break;
     case UI_KEY_ROOFLIGHT_PWM_INC:
-        light_ctrlr::inc_pwm(LIGHT_CTRLR_PWM_STEP, light_ctrlr::ROOFLIGHT);
+        light_ctrlr::rooflight_pwm().Inc();
         break;
     case UI_KEY_ROOFLIGHT_PWM_DEC:
-        light_ctrlr::inc_pwm(-LIGHT_CTRLR_PWM_STEP, light_ctrlr::ROOFLIGHT);
+        light_ctrlr::rooflight_pwm().Dec();
         break;
     case UI_KEY_REARLIGHT_PWM_INC:
-        light_ctrlr::inc_pwm(LIGHT_CTRLR_PWM_STEP, light_ctrlr::REARLIGHT);
+        light_ctrlr::rearlight_pwm().Inc();
         break;
     case UI_KEY_REARLIGHT_PWM_DEC:
-        light_ctrlr::inc_pwm(-LIGHT_CTRLR_PWM_STEP, light_ctrlr::REARLIGHT);
+        light_ctrlr::rearlight_pwm().Dec();
         break;
 
     /* POWERTRAIN DRIVER */

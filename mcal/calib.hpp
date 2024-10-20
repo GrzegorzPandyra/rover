@@ -46,6 +46,7 @@ const uint8_t FAN_CTRL_PWM_DEF_VAL = FAN_CTRL_PWM_MIN;
 /* Light Driver*/
 const uint8_t LIGHT_CTRLR_ROOF_LIGHT_PWM = 16u;
 const uint8_t LIGHT_CTRLR_HEAD_LIGHT_PWM = 12u;
+const uint8_t LIGHT_CTRLR_REAR_LIGHT_PWM = 0u; /*TBD*/
 const uint8_t LIGHT_CTRLR_PWM_STEP = 10u;
 const uint8_t LIGHT_CTRLR_PWM_DEF_VAL = 0u;
 const uint8_t LIGHT_CTRLR_PWM_MIN_VAL = 0u;

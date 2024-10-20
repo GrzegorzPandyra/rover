@@ -2,6 +2,7 @@
 #define LIGHT_CTRLR_H
 
 #include <vector>
+#include "../../class/pwm_channel/pwm_channel.hpp"
 
 namespace light_ctrlr{
     enum Light_T {
@@ -12,9 +13,9 @@ namespace light_ctrlr{
 
     void init(void);
     void run(void);
-    void set_pwm(uint8_t pwm, Light_T light);
-    void inc_pwm(int8_t pwm, Light_T light);
-    uint8_t get_pwm(Light_T light);
+    PWM_Channel& headlight_pwm(void);
+    PWM_Channel& rooflight_pwm(void);
+    PWM_Channel& rearlight_pwm(void);
     std::vector<std::string> export_data(void);
 }
 
