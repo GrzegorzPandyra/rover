@@ -1,59 +1,59 @@
 #include <iostream>
 #include <vector>
-#include "light_ctrlr.hpp"
-#include "../ui/ui_logging.hpp"
-#include "../../mcal/calib.hpp"
+#include "light_ctrl.hpp"
+#include "../../app/ui/ui_logging.hpp"
+#include "../../cfg/calib.hpp"
 
-using namespace light_ctrlr;
+using namespace light_ctrl;
 
 static struct {
     PWM_Channel headlight_pwm = PWM_Channel(
-        LIGHT_CTRLR_HEAD_LIGHT_PWM,
-        LIGHT_CTRLR_PWM_MIN_VAL,
-        LIGHT_CTRLR_PWM_MAX_VAL,
-        LIGHT_CTRLR_PWM_DEF_VAL,
-        LIGHT_CTRLR_PWM_STEP
+        LIGHT_CTRL_HEAD_LIGHT_PWM,
+        LIGHT_CTRL_PWM_MIN_VAL,
+        LIGHT_CTRL_PWM_MAX_VAL,
+        LIGHT_CTRL_PWM_DEF_VAL,
+        LIGHT_CTRL_PWM_STEP
     );
     PWM_Channel rooflight_pwm = PWM_Channel(
-        LIGHT_CTRLR_ROOF_LIGHT_PWM,
-        LIGHT_CTRLR_PWM_MIN_VAL,
-        LIGHT_CTRLR_PWM_MAX_VAL,
-        LIGHT_CTRLR_PWM_DEF_VAL,
-        LIGHT_CTRLR_PWM_STEP
+        LIGHT_CTRL_ROOF_LIGHT_PWM,
+        LIGHT_CTRL_PWM_MIN_VAL,
+        LIGHT_CTRL_PWM_MAX_VAL,
+        LIGHT_CTRL_PWM_DEF_VAL,
+        LIGHT_CTRL_PWM_STEP
     );
     PWM_Channel rearlight_pwm = PWM_Channel(
-        LIGHT_CTRLR_REAR_LIGHT_PWM,
-        LIGHT_CTRLR_PWM_MIN_VAL,
-        LIGHT_CTRLR_PWM_MAX_VAL,
-        LIGHT_CTRLR_PWM_DEF_VAL,
-        LIGHT_CTRLR_PWM_STEP
+        LIGHT_CTRL_REAR_LIGHT_PWM,
+        LIGHT_CTRL_PWM_MIN_VAL,
+        LIGHT_CTRL_PWM_MAX_VAL,
+        LIGHT_CTRL_PWM_DEF_VAL,
+        LIGHT_CTRL_PWM_STEP
     );
 } mgr;
 
-void light_ctrlr::init(void){
+void light_ctrl::init(void){
     mgr.headlight_pwm.Init();
     mgr.rooflight_pwm.Init();
     mgr.rearlight_pwm.Init();
-    LOG("SWC [light_ctrlr] init\n");
+    LOG("SWC [light_ctrl] init\n");
 }
 
-void light_ctrlr::run(void){
+void light_ctrl::run(void){
     mgr.headlight_pwm.Run();
     mgr.rooflight_pwm.Run();
     mgr.rearlight_pwm.Run();
 }
 
-PWM_Channel& light_ctrlr::headlight_pwm(void){
+PWM_Channel& light_ctrl::headlight_pwm(void){
     return mgr.headlight_pwm;
 }
-PWM_Channel& light_ctrlr::rooflight_pwm(void){
+PWM_Channel& light_ctrl::rooflight_pwm(void){
     return mgr.rooflight_pwm;
 }
-PWM_Channel& light_ctrlr::rearlight_pwm(void){
+PWM_Channel& light_ctrl::rearlight_pwm(void){
     return mgr.rearlight_pwm;
 }
 
-std::vector<std::string> light_ctrlr::export_data(void){
+std::vector<std::string> light_ctrl::export_data(void){
     std::vector<std::string> result;
     /* Result has to be property-value pair */
     result.push_back("Headlights PWM");

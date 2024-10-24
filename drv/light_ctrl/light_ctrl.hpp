@@ -1,10 +1,10 @@
-#ifndef LIGHT_CTRLR_H
-#define LIGHT_CTRLR_H
+#ifndef LIGHT_CTRL_H
+#define LIGHT_CTRL_H
 
 #include <vector>
 #include "../../class/pwm_channel/pwm_channel.hpp"
 
-namespace light_ctrlr{
+namespace light_ctrl{
     enum Light_T {
         HEADLIGHT,
         ROOFLIGHT,

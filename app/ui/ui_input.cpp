@@ -1,13 +1,13 @@
 #include <iostream>
 #include "ui_input.hpp" 
-#include "calib.hpp"
+#include "../../cfg/calib.hpp"
 #include <ncurses.h>
 #include "../ui/ui_logging.hpp"
-#include "../app/light_ctrlr/light_ctrlr.hpp"
-#include "../app/pwtr_drv/pwtr_drv.hpp"
-#include "../app/steer_sys_drv/steer_sys_drv.hpp"
-#include "../app/veh/veh.hpp"
-#include "../app/fan_ctrl/fan_ctrl.hpp"
+#include "../veh/veh.hpp"
+#include "../drv/light_ctrl/light_ctrl.hpp"
+#include "../drv/pwtr/pwtr.hpp"
+#include "../drv/steer_sys/steer_sys.hpp"
+#include "../drv/fan_ctrl/fan_ctrl.hpp"
 
 static void process_input(char input);
 static void Handler_UI_KEY_BACKWARD(void);
@@ -36,22 +36,22 @@ static void process_input(char input){
     switch (input){
     /* LIGHT CONTROLLER*/
     case UI_KEY_HEADLIGHT_PWM_INC:
-        light_ctrlr::headlight_pwm().Inc();
+        light_ctrl::headlight_pwm().Inc();
         break;
     case UI_KEY_HEADLIGHT_PWM_DEC:
-        light_ctrlr::headlight_pwm().Dec();
+        light_ctrl::headlight_pwm().Dec();
         break;
     case UI_KEY_ROOFLIGHT_PWM_INC:
-        light_ctrlr::rooflight_pwm().Inc();
+        light_ctrl::rooflight_pwm().Inc();
         break;
     case UI_KEY_ROOFLIGHT_PWM_DEC:
-        light_ctrlr::rooflight_pwm().Dec();
+        light_ctrl::rooflight_pwm().Dec();
         break;
     case UI_KEY_REARLIGHT_PWM_INC:
-        light_ctrlr::rearlight_pwm().Inc();
+        light_ctrl::rearlight_pwm().Inc();
         break;
     case UI_KEY_REARLIGHT_PWM_DEC:
-        light_ctrlr::rearlight_pwm().Dec();
+        light_ctrl::rearlight_pwm().Dec();
         break;
 
     /* POWERTRAIN DRIVER */
@@ -62,11 +62,11 @@ static void process_input(char input){
         Handler_UI_KEY_BACKWARD();
         break;
     case UI_KEY_STOP:
-        pwtr_drv::pwm().Set(PT_DRV_PWM_DEF_VAL);
+        pwtr::pwm().Set(PT_DRV_PWM_DEF_VAL);
         veh::set_gear(veh::PRND_N);
         break;
     case UI_KEY_PWM_AUTO_DEC:
-        pwtr_drv::toggle_pwm_dec();
+        pwtr::toggle_pwm_dec();
         break;
 
     /* VEHICLE*/
@@ -79,12 +79,12 @@ static void process_input(char input){
 
     /* STEERING SYSTEM */
     case UI_KEY_TURN_RIGHT:
-        steer_sys_drv::left_servo_pwm().Inc();
-        steer_sys_drv::right_servo_pwm().Inc();
+        steer_sys::left_servo_pwm().Inc();
+        steer_sys::right_servo_pwm().Inc();
         break;
     case UI_KEY_TURN_LEFT:
-        steer_sys_drv::left_servo_pwm().Dec();
-        steer_sys_drv::right_servo_pwm().Dec();
+        steer_sys::left_servo_pwm().Dec();
+        steer_sys::right_servo_pwm().Dec();
 
     /* FAN CTRL */
     case UI_KEY_FAN_PWM_INC:
@@ -114,10 +114,10 @@ static void Handler_UI_KEY_BACKWARD(void){
     case veh::PRND_D1:
     case veh::PRND_D2:
     case veh::PRND_D3:
-        pwtr_drv::pwm().Dec();
+        pwtr::pwm().Dec();
         break;
     case veh::PRND_R:
-        pwtr_drv::pwm().Inc();
+        pwtr::pwm().Inc();
     default:
         break;
     }
@@ -128,10 +128,10 @@ static void Handler_UI_KEY_FORWARD(void){
     case veh::PRND_D1:
     case veh::PRND_D2:
     case veh::PRND_D3:
-        pwtr_drv::pwm().Inc();
+        pwtr::pwm().Inc();
         break;
     case veh::PRND_R:
-        pwtr_drv::pwm().Dec();
+        pwtr::pwm().Dec();
     default:
         break;
     }

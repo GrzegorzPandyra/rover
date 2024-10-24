@@ -5,8 +5,8 @@
 #include <vector>
 #include "tacho.hpp"
 #include <wiringPi.h>
-#include "../ui/ui_logging.hpp"
-#include "../../mcal/calib.hpp"
+#include "../../app/ui/ui_logging.hpp"
+#include "../../cfg/calib.hpp"
 
 #define PERIOD_1000_MS 1000u
 

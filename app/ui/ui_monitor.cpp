@@ -1,15 +1,15 @@
 #include <iostream>
 #include <vector>
-#include "calib.hpp"
 #include <ncurses.h>
+#include "../../cfg/calib.hpp"
 #include "ui_monitor.hpp"
-#include "../ui/ui_logging.hpp"
-#include "../dummy_app/dummy_app.hpp"
-#include "../light_ctrlr/light_ctrlr.hpp"
-#include "../pwtr_drv/pwtr_drv.hpp"
-#include "../steer_sys_drv/steer_sys_drv.hpp"
+#include "ui_logging.hpp"
 #include "../veh/veh.hpp"
-#include "../app/fan_ctrl/fan_ctrl.hpp"
+#include "../dummy_app/dummy_app.hpp"
+#include "../../drv/light_ctrl/light_ctrl.hpp"
+#include "../../drv/pwtr/pwtr.hpp"
+#include "../../drv/steer_sys/steer_sys.hpp"
+#include "../../drv/fan_ctrl/fan_ctrl.hpp"
 
 /**************************************************************************
  *** Declarations
@@ -38,9 +38,9 @@ static void update_monitor(Monitor_T);
  *************************************************************************/
 
 static const Monitor_T monitors[] = {
-    {LIGHT_CONTROLLER,  "LIGHT_CONTROLLER", NULL,  light_ctrlr::export_data},
-    {POWERTRAIN,        "POWERTRAIN",       NULL,  pwtr_drv::export_data},
-    {STEERING_SYSTEM,   "STEERING_SYSTEM",  NULL,  steer_sys_drv::export_data},
+    {LIGHT_CONTROLLER,  "LIGHT_CONTROLLER", NULL,  light_ctrl::export_data},
+    {POWERTRAIN,        "POWERTRAIN",       NULL,  pwtr::export_data},
+    {STEERING_SYSTEM,   "STEERING_SYSTEM",  NULL,  steer_sys::export_data},
     {VEHICLE,           "VEHICLE",          NULL,  veh::export_data},
     {POWER,             "POWER",            NULL,  dummy_app::get_mon_data},
     {DIAGNOSTIC,        "DIAGNOSTIC",       NULL,  dummy_app::get_mon_data},

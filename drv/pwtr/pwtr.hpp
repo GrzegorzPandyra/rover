@@ -1,10 +1,10 @@
-#ifndef PWTR_DRV_H
-#define PWTR_DRV_H
+#ifndef PWTR_H
+#define PWTR_H
 
 #include <vector>
 #include "../../class/pwm_channel/pwm_channel.hpp"
 
-namespace pwtr_drv{
+namespace pwtr{
 
     enum Motor_Dir_T{
         FORWARD = 0,
@@ -22,4 +22,4 @@ namespace pwtr_drv{
     
 }
 
-#endif /* PWTR_DRV_H */
+#endif /* PWTR_H */

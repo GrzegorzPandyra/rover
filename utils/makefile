@@ -5,7 +5,7 @@
 # Build process:
 # 1) Connect via remote desktop to RPI
 # 2) .bashrc should take you to project build directory
-# 3) run 'clear && resync && make'
+# 3) run 'clear && make'
 
 define NEWLINE
 endef
@@ -13,38 +13,39 @@ endef
 # Folders
 PROJECT_ROOT=..
 APP_DIR		= $(PROJECT_ROOT)/app
+DRV_DIR		= $(PROJECT_ROOT)/drv
 CLASS_DIR   = $(PROJECT_ROOT)/class
-OS_DIR		= $(PROJECT_ROOT)/os
-MCAL_DIR	= $(PROJECT_ROOT)/mcal
-OUT_DIR		= $(PROJECT_ROOT)/out
 LIB_DIR		= $(PROJECT_ROOT)/lib
+OUT_DIR		= $(PROJECT_ROOT)/out
 
-APP_MODULES = \
-dummy_app \
-ui \
-light_ctrlr \
-steer_sys_drv \
-pwtr_drv \
-veh \
+DRV_LIST = \
+pwtr \
+light_ctrl \
+steer_sys \
 fan_ctrl \
 buzzer \
 tacho
 
-CLASSES = \
+APP_LIST = \
+init \
+os \
+dummy_app \
+ui \
+veh
+
+CLASS_LIST = \
 pwm_channel
 
 #assemble list of source files
-SRC_LIST += $(wildcard $(MCAL_DIR)/*.cpp)
-SRC_LIST += $(wildcard $(OS_DIR)/*.cpp)
 SRC_LIST += $(wildcard $(LIB_DIR)/*.cpp)
-SRC_LIST += $(foreach module, $(APP_MODULES), $(wildcard $(APP_DIR)/$(module)/*.cpp))
-SRC_LIST += $(foreach class,  $(CLASSES),     $(wildcard $(CLASS_DIR)/$(class)/*.cpp))
+SRC_LIST += $(foreach module, $(APP_LIST), 	$(wildcard $(APP_DIR)/$(module)/*.cpp))
+SRC_LIST += $(foreach module, $(DRV_LIST), 	$(wildcard $(DRV_DIR)/$(module)/*.cpp))
+SRC_LIST += $(foreach class,  $(CLASS_LIST),$(wildcard $(CLASS_DIR)/$(class)/*.cpp))
 
 #assemble list of include directories
-INCLUDE_LIST += $(foreach module, $(APP_MODULES), -I$(wildcard $(APP_DIR)/$(module)))
-INCLUDE_LIST += $(foreach class,  $(CLASSES),     -I$(wildcard $(CLASS_DIR)/$(class)))
-INCLUDE_LIST += -I$(OS_DIR)
-INCLUDE_LIST += -I$(MCAL_DIR)
+INCLUDE_LIST += $(foreach module, $(APP_LIST), 	-I$(wildcard $(APP_DIR)/$(module)))
+INCLUDE_LIST += $(foreach module, $(DRV_LIST),  -I$(wildcard $(DRV_DIR)/$(module)))
+INCLUDE_LIST += $(foreach class,  $(CLASS_LIST),-I$(wildcard $(CLASS_DIR)/$(class)))
 INCLUDE_LIST += -I$(LIB_DIR)
 
 #compiler
@@ -52,9 +53,6 @@ CC=g++
 # MMCU=atmega328P
 CFLAGS= -Wall -Os #-std=c99 -mmcu=$(MMCU)
 # DEFINES = 	-D DUMMY_DEFINE_1 \
-
-# include ../config/global_config.cfg
-# include ../config/diag_config.cfg
 
 #default rule
 all: clean p26_rover print_ok

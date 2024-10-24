@@ -1,16 +1,16 @@
 #include <iostream>
 #include <vector>
-#include "pwtr_drv.hpp"
+#include "pwtr.hpp"
 #include <wiringPi.h>
-#include "../ui/ui_logging.hpp"
-#include "../../mcal/calib.hpp"
+#include "../../app/ui/ui_logging.hpp"
+#include "../../cfg/calib.hpp"
 #include "../veh/veh.hpp"
 #include "../tacho/tacho.hpp"
 #include "../fan_ctrl/fan_ctrl.hpp"
 
 static void motor_rotation(void);
 
-using namespace pwtr_drv;
+using namespace pwtr;
 
 static struct {
     PWM_Channel motor_pwm = PWM_Channel(
@@ -25,7 +25,7 @@ static struct {
     bool pwm_auto_dec;
 } mgr;
 
-void pwtr_drv::init(void){
+void pwtr::init(void){
     pinMode(PT_DRV_DC_MOTOR_A, OUTPUT);
     pinMode(PT_DRV_DC_MOTOR_B, OUTPUT);
 
@@ -37,10 +37,10 @@ void pwtr_drv::init(void){
     mgr.hardstart = FALSE;
     mgr.pwm_auto_dec = TRUE;
 
-    LOG("SWC [pwtr_drv] init\n");
+    LOG("SWC [pwtr] init\n");
 }
 
-void pwtr_drv::run(void){
+void pwtr::run(void){
     motor_rotation();
     mgr.motor_pwm.Run();
     // if(mgr.hardstart && (mgr.hardstart_timer > 0u)){
@@ -55,25 +55,25 @@ void pwtr_drv::run(void){
 
 }
 
-void pwtr_drv::expire_pwm(void){
+void pwtr::expire_pwm(void){
     if(mgr.pwm_auto_dec){
         mgr.motor_pwm.Dec();
     }
 }
 
-PWM_Channel& pwtr_drv::pwm(void){
+PWM_Channel& pwtr::pwm(void){
     return mgr.motor_pwm;
 }
 
-void pwtr_drv::toggle_pwm_dec(void){
+void pwtr::toggle_pwm_dec(void){
     mgr.pwm_auto_dec = !mgr.pwm_auto_dec;
 }
 
-void pwtr_drv::toggle_hardstart(void){
+void pwtr::toggle_hardstart(void){
     mgr.hardstart = !mgr.hardstart;
 }
 
-std::vector<std::string> pwtr_drv::export_data(void){
+std::vector<std::string> pwtr::export_data(void){
     std::vector<std::string> result;
     /* Result has to be property-value pair */
     result.push_back("Motor PWM");

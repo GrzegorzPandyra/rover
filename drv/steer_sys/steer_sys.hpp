@@ -1,10 +1,10 @@
-#ifndef STEER_SYS_DRV_H
-#define STEER_SYS_DRV_H
+#ifndef STEER_SYS_H
+#define STEER_SYS_H
 
 #include <vector>
 #include "../../class/pwm_channel/pwm_channel.hpp"
 
-namespace steer_sys_drv{
+namespace steer_sys{
     struct Servo_Pwm_T {
         uint8_t left_servo;
         uint8_t right_servo;
@@ -17,4 +17,4 @@ namespace steer_sys_drv{
     std::vector<std::string> export_data(void);
 }
 
-#endif /* STEER_SYS_DRV_H */
+#endif /* STEER_SYS_H */

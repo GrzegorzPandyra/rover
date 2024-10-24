@@ -1,7 +1,7 @@
 #include <iostream>
 #include <unistd.h> 
 #include "../os/os_scheduler.hpp"
-#include "../app/ui/ui_logging.hpp"
+#include "../ui/ui_logging.hpp"
 
 int main()
 {

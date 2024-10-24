@@ -1,7 +1,7 @@
 #ifndef OS_CFG_H
 #define OS_CFG_H
 #include <string>
-#include "os_task.hpp"
+#include "../app/os/os_task.hpp"
 
 /* Add relevant includes here */
 #include "../lib/ncurses.hpp"
@@ -9,22 +9,22 @@
 #include "../app/ui/ui_input.hpp"
 #include "../app/ui/ui_monitor.hpp"
 #include "../app/dummy_app/dummy_app.hpp"
-#include "../app/light_ctrlr/light_ctrlr.hpp"
-#include "../app/pwtr_drv/pwtr_drv.hpp"
-#include "../app/steer_sys_drv/steer_sys_drv.hpp"
-#include "../app/fan_ctrl/fan_ctrl.hpp"
-#include "../app/buzzer/buzzer.hpp"
-#include "../app/tacho/tacho.hpp"
 #include "../app/veh/veh.hpp"
+#include "../drv/light_ctrl/light_ctrl.hpp"
+#include "../drv/steer_sys/steer_sys.hpp"
+#include "../drv/pwtr/pwtr.hpp"
+#include "../drv/fan_ctrl/fan_ctrl.hpp"
+#include "../drv/buzzer/buzzer.hpp"
+#include "../drv/tacho/tacho.hpp"
 
 #define OS_TASK_INIT_LIST() /* Add relevant function calls below */\
                             ncurses::init(); \
                             wiringpi::init(); \
                             ui_input::init(); \
                             ui_monitor::init(); \
-                            light_ctrlr::init(); \
-                            pwtr_drv::init(); \
-                            steer_sys_drv::init(); \
+                            light_ctrl::init(); \
+                            pwtr::init(); \
+                            steer_sys::init(); \
                             dummy_app::dummy_app_init(); \
                             buzzer::init(); \
                             tacho::init(); \
@@ -41,21 +41,21 @@
 
 #define OS_TASK_10_MS_LIST() /* Add relevant function calls below */\
                             ui_monitor::run(); \
-                            pwtr_drv::run(); \
+                            pwtr::run(); \
                             fan_ctrl::run(); \
-                            steer_sys_drv::run(); \
+                            steer_sys::run(); \
                             buzzer::run(); \
                             veh::run();
                             // dummy_app::dummy_app_run2();
 
 #define OS_TASK_100_MS_LIST() /* Add relevant function calls below */\
-                            light_ctrlr::run();
+                            light_ctrl::run();
                             
 
 #define OS_TASK_250_MS_LIST() /* Add relevant function calls below */\
 
 #define OS_TASK_500_MS_LIST() /* Add relevant function calls below */\
-                            pwtr_drv::expire_pwm();
+                            pwtr::expire_pwm();
 
 #define OS_TASK_1000_MS_LIST() /* Add relevant function calls below */\
 

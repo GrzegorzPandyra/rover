@@ -5,8 +5,8 @@
 #include <iostream>
 #include <vector>
 #include "buzzer.hpp"
-#include "../ui/ui_logging.hpp"
-#include "../../mcal/calib.hpp"
+#include "../../app/ui/ui_logging.hpp"
+#include "../../cfg/calib.hpp"
 #include <wiringPi.h>
 #include <softPwm.h>
 
