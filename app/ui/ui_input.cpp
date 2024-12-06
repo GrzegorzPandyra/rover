@@ -4,10 +4,10 @@
 #include <ncurses.h>
 #include "../ui/ui_logging.hpp"
 #include "../veh/veh.hpp"
-#include "../drv/light_ctrl/light_ctrl.hpp"
-#include "../drv/pwtr/pwtr.hpp"
-#include "../drv/steer_sys/steer_sys.hpp"
-#include "../drv/fan_ctrl/fan_ctrl.hpp"
+#include "../../drv/light_ctrl/light_ctrl.hpp"
+#include "../../drv/pwtr/pwtr.hpp"
+#include "../../drv/steer_sys/steer_sys.hpp"
+#include "../../drv/fan_ctrl/fan_ctrl.hpp"
 
 static void process_input(char input);
 static void Handler_UI_KEY_BACKWARD(void);
@@ -36,22 +36,22 @@ static void process_input(char input){
     switch (input){
     /* LIGHT CONTROLLER*/
     case UI_KEY_HEADLIGHT_PWM_INC:
-        light_ctrl::headlight_pwm().Inc();
+        light_ctrl::get_headlight_pwm().Inc();
         break;
     case UI_KEY_HEADLIGHT_PWM_DEC:
-        light_ctrl::headlight_pwm().Dec();
+        light_ctrl::get_headlight_pwm().Dec();
         break;
     case UI_KEY_ROOFLIGHT_PWM_INC:
-        light_ctrl::rooflight_pwm().Inc();
+        light_ctrl::get_rooflight_pwm().Inc();
         break;
     case UI_KEY_ROOFLIGHT_PWM_DEC:
-        light_ctrl::rooflight_pwm().Dec();
+        light_ctrl::get_rooflight_pwm().Dec();
         break;
     case UI_KEY_REARLIGHT_PWM_INC:
-        light_ctrl::rearlight_pwm().Inc();
+        light_ctrl::get_rearlight_pwm().Inc();
         break;
     case UI_KEY_REARLIGHT_PWM_DEC:
-        light_ctrl::rearlight_pwm().Dec();
+        light_ctrl::get_rearlight_pwm().Dec();
         break;
 
     /* POWERTRAIN DRIVER */

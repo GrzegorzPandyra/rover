@@ -43,13 +43,13 @@ void light_ctrl::run(void){
     mgr.rearlight_pwm.Run();
 }
 
-PWM_Channel& light_ctrl::headlight_pwm(void){
+PWM_Channel& light_ctrl::get_headlight_pwm(void){
     return mgr.headlight_pwm;
 }
-PWM_Channel& light_ctrl::rooflight_pwm(void){
+PWM_Channel& light_ctrl::get_rooflight_pwm(void){
     return mgr.rooflight_pwm;
 }
-PWM_Channel& light_ctrl::rearlight_pwm(void){
+PWM_Channel& light_ctrl::get_rearlight_pwm(void){
     return mgr.rearlight_pwm;
 }
 

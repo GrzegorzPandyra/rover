@@ -36,7 +36,7 @@ const uint16_t PT_HARDSTART_PWM = 80u;
 const float    PT_HARDSTART_RPS_THRESHOLD = 0.2f;
 
 /* Fan controller */
-const uint8_t FAN_CTRL_FAN_PWM = 26u;
+const uint8_t FAN_CTRL_FAN_PWM = 26u; /* Common pin for 2 physical fans */
 const uint8_t FAN_CTRL_PWM_MAX = 100u;
 const uint8_t FAN_CTRL_PWM_MIN = 70u;
 const uint8_t FAN_CTRL_PWM_INC_STEP = 5u;
@@ -86,6 +86,12 @@ const uint8_t TACHO_PIN = 15u;
 const uint8_t TACHO_TASK_PERIOD_MS = 1u;
 const uint8_t TACHO_NUM_BOARD_SLOTS = 40u;
 
+/* Power Monitoring */
+// const uint8_t PWR_MON_INA3221_I2C_ADDR = 0x41u;
+// const uint8_t PWR_MON_INA226_I2C_ADDR_1 = 0x40u;
+// const uint8_t PWR_MON_INA226_I2C_ADDR_2 = 0x45u;
+// const uint8_t PWR_MON_INA226_I2C_ADDR_3 = 0x44u;
+
 /* User interface layout */
 const uint8_t LIGHTS_WIN_HEIGHT = 10u;
 const uint8_t LIGHTS_WIN_WIDTH = 40u;
@@ -121,5 +127,8 @@ const uint8_t DIAGNOSTIC_WIN_HEIGHT =  21u;
 const uint8_t DIAGNOSTIC_WIN_WIDTH =  40u;
 const uint8_t DIAGNOSTIC_WIN_Y = 22u;
 const uint8_t DIAGNOSTIC_WIN_X =  142u;
+
+/* Logging */
+
 
 #endif /* CALIB_H */

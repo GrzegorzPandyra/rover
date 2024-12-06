@@ -14,7 +14,7 @@ endef
 PROJECT_ROOT=..
 APP_DIR		= $(PROJECT_ROOT)/app
 DRV_DIR		= $(PROJECT_ROOT)/drv
-CLASS_DIR   = $(PROJECT_ROOT)/class
+COMMON_DIR   = $(PROJECT_ROOT)/common
 LIB_DIR		= $(PROJECT_ROOT)/lib
 OUT_DIR		= $(PROJECT_ROOT)/out
 
@@ -24,34 +24,37 @@ light_ctrl \
 steer_sys \
 fan_ctrl \
 buzzer \
-tacho
+tacho \
+i2c
 
 APP_LIST = \
 init \
 os \
 dummy_app \
 ui \
-veh
+veh \
+pwr_mon
 
-CLASS_LIST = \
+COMMON_LIST = \
 pwm_channel
 
 #assemble list of source files
 SRC_LIST += $(wildcard $(LIB_DIR)/*.cpp)
 SRC_LIST += $(foreach module, $(APP_LIST), 	$(wildcard $(APP_DIR)/$(module)/*.cpp))
 SRC_LIST += $(foreach module, $(DRV_LIST), 	$(wildcard $(DRV_DIR)/$(module)/*.cpp))
-SRC_LIST += $(foreach class,  $(CLASS_LIST),$(wildcard $(CLASS_DIR)/$(class)/*.cpp))
+SRC_LIST += $(foreach module,  $(COMMON_LIST),$(wildcard $(COMMON_DIR)/$(module)/*.cpp))
 
 #assemble list of include directories
 INCLUDE_LIST += $(foreach module, $(APP_LIST), 	-I$(wildcard $(APP_DIR)/$(module)))
 INCLUDE_LIST += $(foreach module, $(DRV_LIST),  -I$(wildcard $(DRV_DIR)/$(module)))
-INCLUDE_LIST += $(foreach class,  $(CLASS_LIST),-I$(wildcard $(CLASS_DIR)/$(class)))
+INCLUDE_LIST += $(foreach module,  $(COMMON_LIST),-I$(wildcard $(COMMON_DIR)/$(module)))
 INCLUDE_LIST += -I$(LIB_DIR)
+
 
 #compiler
 CC=g++
 # MMCU=atmega328P
-CFLAGS= -Wall -Os #-std=c99 -mmcu=$(MMCU)
+CFLAGS= -Wall -Os -std=c++17 #-mmcu=$(MMCU)
 # DEFINES = 	-D DUMMY_DEFINE_1 \
 
 #default rule

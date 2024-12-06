@@ -2,7 +2,7 @@
 #define STEER_SYS_H
 
 #include <vector>
-#include "../../class/pwm_channel/pwm_channel.hpp"
+#include "../../common/pwm_channel/pwm_channel.hpp"
 
 namespace steer_sys{
     struct Servo_Pwm_T {

@@ -10,6 +10,7 @@
 #include "../../drv/pwtr/pwtr.hpp"
 #include "../../drv/steer_sys/steer_sys.hpp"
 #include "../../drv/fan_ctrl/fan_ctrl.hpp"
+#include "../../app/pwr_mon/pwr_mon.hpp"
 
 /**************************************************************************
  *** Declarations
@@ -42,7 +43,7 @@ static const Monitor_T monitors[] = {
     {POWERTRAIN,        "POWERTRAIN",       NULL,  pwtr::export_data},
     {STEERING_SYSTEM,   "STEERING_SYSTEM",  NULL,  steer_sys::export_data},
     {VEHICLE,           "VEHICLE",          NULL,  veh::export_data},
-    {POWER,             "POWER",            NULL,  dummy_app::get_mon_data},
+    {POWER,             "POWER",            NULL,  pwr_mon::export_data},
     {DIAGNOSTIC,        "DIAGNOSTIC",       NULL,  dummy_app::get_mon_data},
 
 };

@@ -10,6 +10,8 @@
 #include "../app/ui/ui_monitor.hpp"
 #include "../app/dummy_app/dummy_app.hpp"
 #include "../app/veh/veh.hpp"
+#include "../app/pwr_mon/pwr_mon.hpp"
+#include "../drv/i2c/i2c.hpp"
 #include "../drv/light_ctrl/light_ctrl.hpp"
 #include "../drv/steer_sys/steer_sys.hpp"
 #include "../drv/pwtr/pwtr.hpp"
@@ -20,6 +22,7 @@
 #define OS_TASK_INIT_LIST() /* Add relevant function calls below */\
                             ncurses::init(); \
                             wiringpi::init(); \
+                            i2c::init(); \
                             ui_input::init(); \
                             ui_monitor::init(); \
                             light_ctrl::init(); \
@@ -30,14 +33,16 @@
                             tacho::init(); \
                             veh::init(); \
                             fan_ctrl::init(); \
+                            pwr_mon::init(); \
                             buzzer::buzz(50);
 
 #define OS_TASK_1_MS_LIST() /* Add relevant function calls below */\
                             ui_input::run(); \
+                            i2c::run(); \
                             tacho::run();
 
 #define OS_TASK_5_MS_LIST() /* Add relevant function calls below */\
-                            /* Dummy_call() */
+                            
 
 #define OS_TASK_10_MS_LIST() /* Add relevant function calls below */\
                             ui_monitor::run(); \
@@ -53,6 +58,7 @@
                             
 
 #define OS_TASK_250_MS_LIST() /* Add relevant function calls below */\
+                            pwr_mon::run();
 
 #define OS_TASK_500_MS_LIST() /* Add relevant function calls below */\
                             pwtr::expire_pwm();
