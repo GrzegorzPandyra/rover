@@ -11,21 +11,20 @@ void i2c::run(void){
 }
 
 int8_t i2c::register_node(uint8_t addr){
-    char log_buff[UI_DEFAULT_LOG_BUFFER_SIZE] = {0};
     int8_t fd = wiringPiI2CSetup((int32_t)addr);
     if (fd == i2c::FILE_DESCRIPTOR_ERROR) {
-        LOG_FORMATED_1(log_buff, "Failed to init I2C communication for %d\n", addr);
+        LOG_FORMATED_1("Failed to init I2C communication for 0x%x\n", addr);
     } else {
-        LOG_FORMATED_1(log_buff, "Found I2C node %d\n", addr);
+        LOG_FORMATED_1("Found I2C node 0x%x\n", addr);
     }
     return fd;
 }
 
-uint16_t i2c::read_reg16(int32_t fd, int16_t reg){
-    return  wiringPiI2CReadReg16(fd, reg);
+int16_t i2c::read_reg16(int32_t fd, int16_t reg){
+    return  wiringPiI2CReadReg16(fd, reg);;
 }
 
-uint8_t i2c::read_reg8(int32_t fd, int16_t reg){
+int8_t i2c::read_reg8(int32_t fd, int16_t reg){
     return  wiringPiI2CReadReg8(fd, reg);
 }
 

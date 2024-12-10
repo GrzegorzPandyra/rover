@@ -18,8 +18,8 @@ namespace i2c{
     void init(void);
     void run(void);
     int8_t register_node(uint8_t addr);
-    uint16_t read_reg16(int32_t fd, int16_t reg);
-    uint8_t read_reg8(int32_t fd, int16_t reg);
+    int16_t read_reg16(int32_t fd, int16_t reg);
+    int8_t read_reg8(int32_t fd, int16_t reg);
     void write_reg8(int32_t fd, int16_t reg, uint8_t data);
     void write_reg16(int32_t fd, int16_t reg, uint16_t data);
 }

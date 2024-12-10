@@ -3,14 +3,15 @@
     #include "ncurses.h"
     #include <string.h>
 
-    const uint8_t UI_DEFAULT_LOG_BUFFER_SIZE = 50u;
+    const uint8_t UI_DEFAULT_LOG_BUFFER_SIZE = 100u;
+    extern char log_buff[];
 
     #define LOG(str) (wprintw(stdscr, (str)))
-    #define LOG_FORMATED_1(buff, format, data1) \
-        sprintf(buff, format, data1);\
-        wprintw(stdscr, (buff))
-    #define LOG_FORMATED_2(buff, format, data1, data2) \
-        sprintf(buff, format, data1, data2);\
-        wprintw(stdscr, (buff))
+    #define LOG_FORMATED_1(format, data1) \
+        sprintf(log_buff, format, data1);\
+        wprintw(stdscr, (log_buff))
+    #define LOG_FORMATED_2(log_buff, format, data1, data2) \
+        sprintf(log_buff, format, data1, data2);\
+        wprintw(stdscr, (log_buff))
 
 #endif

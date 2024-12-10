@@ -7,7 +7,7 @@ class I2C_Device {
     public:
         I2C_Device(const int8_t addr);
         ~I2C_Device();
-        virtual void init();
+        void init();
         virtual void run(void);
     protected:
         int32_t m_fd;
