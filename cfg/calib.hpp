@@ -10,6 +10,7 @@ const uint8_t SS_DRV_MIN_PWM_VAL = 4;
 const uint8_t SS_DRV_MAX_PWM_VAL = 12u;
 const uint8_t SS_DRV_PWM_INC_STEP = 1u;
 const uint8_t SS_DRV_PWM_DEF_VAL = (SS_DRV_MAX_PWM_VAL - SS_DRV_MIN_PWM_VAL)/2u + SS_DRV_MIN_PWM_VAL;
+const uint8_t SS_NEUTRAL_WHEEL_PWM = 8;
 
 /* Powertrain Driver */
 const uint8_t PT_DRV_DC_MOTOR_A = 6u;
@@ -87,10 +88,6 @@ const uint8_t TACHO_TASK_PERIOD_MS = 1u;
 const uint8_t TACHO_NUM_BOARD_SLOTS = 40u;
 
 /* Power Monitoring */
-// const uint8_t PWR_MON_INA3221_I2C_ADDR = 0x41u;
-// const uint8_t PWR_MON_INA226_I2C_ADDR_1 = 0x40u;
-// const uint8_t PWR_MON_INA226_I2C_ADDR_2 = 0x45u;
-// const uint8_t PWR_MON_INA226_I2C_ADDR_3 = 0x44u;
 
 /* User interface layout */
 const uint8_t LIGHTS_WIN_HEIGHT = 10u;
@@ -123,6 +120,11 @@ const uint8_t POWER_WIN_WIDTH =  40u;
 const uint8_t POWER_WIN_Y = 1u;
 const uint8_t POWER_WIN_X =  142u;
 
+const uint8_t INPUT_WIN_HEIGHT =  10u;
+const uint8_t INPUT_WIN_WIDTH =  40u;
+const uint8_t INPUT_WIN_Y = 11u;
+const uint8_t INPUT_WIN_X =  142u;
+
 const uint8_t DIAGNOSTIC_WIN_HEIGHT =  21u;
 const uint8_t DIAGNOSTIC_WIN_WIDTH =  40u;
 const uint8_t DIAGNOSTIC_WIN_Y = 22u;
@@ -130,5 +132,27 @@ const uint8_t DIAGNOSTIC_WIN_X =  142u;
 
 /* Logging */
 
+/* Joystick */
+const uint8_t JS_BTN_X = 3;
+const uint8_t JS_BTN_Y = 4;
+const uint8_t JS_BTN_A = 0;
+const uint8_t JS_BTN_B = 1;
+const uint8_t JS_BTN_R1 = 7;
+const uint8_t JS_BTN_R2 = 9;
+const uint8_t JS_BTN_L1 = 6;
+const uint8_t JS_BTN_L2 = 8;
+const uint8_t JS_BTN_LSTICK = 13;
+const uint8_t JS_BTN_RSTICK = 14;
+const uint8_t JS_BTN_SELECT = 10;
+const uint8_t JS_BTN_START = 11;
+const uint8_t JS_AXIS_LSTICK_H = 0;
+const uint8_t JS_AXIS_LSTICK_V = 1;
+const uint8_t JS_AXIS_RSTICK_H = 2;
+const uint8_t JS_AXIS_RSTICK_V = 3;
+const uint8_t JS_AXIS_DPAD_H = 6;
+const uint8_t JS_AXIS_DPAD_V = 7;
+const int16_t JS_AXIS_MIN = -32767;
+const int16_t JS_AXIS_MAX = 32767;
+const char    JS_DEV_PATH[] = "/dev/input/js0";
 
 #endif /* CALIB_H */

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "ui_input.hpp" 
+#include "ui_joystick.hpp" 
 #include "../../cfg/calib.hpp"
 #include <ncurses.h>
 #include "../ui/ui_logging.hpp"
@@ -9,7 +10,8 @@
 #include "../../drv/steer_sys/steer_sys.hpp"
 #include "../../drv/fan_ctrl/fan_ctrl.hpp"
 
-static void process_input(char input);
+static void process_console_input(char input);
+static void process_joystick_input();
 static void Handler_UI_KEY_BACKWARD(void);
 static void Handler_UI_KEY_FORWARD(void);
 
@@ -24,7 +26,9 @@ void ui_input::init(void){
 void ui_input::run(void){
     int input = getch();
     if(input != ERR){ /* ncurses: ERR = -1 */
-        process_input((char)input);
+        process_console_input((char)input);
+    } else {
+        process_joystick_input();
     }
 }
 
@@ -32,7 +36,7 @@ void ui_input::run(void){
  *** Static functions
  *************************************************************************/
 
-static void process_input(char input){
+static void process_console_input(char input){
     switch (input){
     /* LIGHT CONTROLLER*/
     case UI_KEY_HEADLIGHT_PWM_INC:
@@ -85,7 +89,7 @@ static void process_input(char input){
     case UI_KEY_TURN_LEFT:
         steer_sys::left_servo_pwm().Dec();
         steer_sys::right_servo_pwm().Dec();
-
+        break;
     /* FAN CTRL */
     case UI_KEY_FAN_PWM_INC:
         fan_ctrl::pwm().Inc();
@@ -99,9 +103,20 @@ static void process_input(char input){
     }
 
     if(input == SYSTEM_TERMINATE_CHAR) {
+        ui_joystick::deinit();
         endwin(); /* ncurses */
         std::cout << " Rover control program - shutdown complete\n\r";
         exit(0);
+    }
+}
+
+static void process_joystick_input(){
+    ui_joystick::Js_Input_T js_input = ui_joystick::get_inputs();
+    uint8_t ss_input = js_input.axis_lstick_h/(JS_AXIS_MAX/4) + 8;
+    steer_sys::left_servo_pwm().Set(ss_input);
+    steer_sys::right_servo_pwm().Set(ss_input);
+    if(js_input.btn_select){
+        pwtr::toggle_pwm_dec();
     }
 }
 

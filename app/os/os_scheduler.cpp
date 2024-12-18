@@ -9,6 +9,7 @@ using namespace os_scheduler;
 static unsigned long long os_init_time = 0u;
 static unsigned long long os_time = 0u;
 static unsigned long long os_time_prev = 0u;
+static OS_Scheduler_Status_T scheduler_status = OS_SCHDLR_UNINITIALIZED;
 
 OS_Scheduler_Status_T os_scheduler::Init(void){
     using namespace std::chrono;
@@ -20,6 +21,7 @@ OS_Scheduler_Status_T os_scheduler::Init(void){
         }
     }
     LOG("OS scheduler initialization successful\n");
+    scheduler_status = OS_SCHDLR_INITIALIZED;
     return OS_SCHDLR_INITIALIZED;
 }
 
@@ -28,7 +30,7 @@ void os_scheduler::Run(void){
     os_time = (uint64_t)duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count() - os_init_time;
 
     /* Check if loop was executed this cycle */
-    if(os_time_prev < os_time){
+    if((os_time_prev < os_time) && (scheduler_status == OS_SCHDLR_INITIALIZED)){
         using namespace os_cfg;
         /* Execute scheduled tasks */
         for(uint8_t i = 0u; i<NUM_TASKS; i++){

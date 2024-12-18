@@ -10,7 +10,7 @@
     #define LOG_FORMATED_1(format, data1) \
         sprintf(log_buff, format, data1);\
         wprintw(stdscr, (log_buff))
-    #define LOG_FORMATED_2(log_buff, format, data1, data2) \
+    #define LOG_FORMATED_2(format, data1, data2) \
         sprintf(log_buff, format, data1, data2);\
         wprintw(stdscr, (log_buff))
 

@@ -8,6 +8,7 @@
 #include "../lib/wiringpi.hpp"
 #include "../app/ui/ui_input.hpp"
 #include "../app/ui/ui_monitor.hpp"
+#include "../app/ui/ui_joystick.hpp"
 #include "../app/dummy_app/dummy_app.hpp"
 #include "../app/veh/veh.hpp"
 #include "../app/pwr_mon/pwr_mon.hpp"
@@ -34,14 +35,15 @@
                             veh::init(); \
                             fan_ctrl::init(); \
                             pwr_mon::init(); \
+                            ui_joystick::init();\
                             buzzer::buzz(50);
 
 #define OS_TASK_1_MS_LIST() /* Add relevant function calls below */\
-                            ui_input::run(); \
                             i2c::run(); \
                             tacho::run();
 
 #define OS_TASK_5_MS_LIST() /* Add relevant function calls below */\
+                            ui_input::run();
                             
 
 #define OS_TASK_10_MS_LIST() /* Add relevant function calls below */\
@@ -58,6 +60,7 @@
                             
 
 #define OS_TASK_250_MS_LIST() /* Add relevant function calls below */\
+                            ui_joystick::run(); \
                             pwr_mon::run();
 
 #define OS_TASK_500_MS_LIST() /* Add relevant function calls below */\

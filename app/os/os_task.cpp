@@ -1,6 +1,7 @@
 #include "os_task.hpp"
 #include "../../cfg/os_cfg.hpp"
 
+
 void os_task::Task_Init(void){
     OS_TASK_INIT_LIST()
 }

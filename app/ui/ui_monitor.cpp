@@ -11,6 +11,7 @@
 #include "../../drv/steer_sys/steer_sys.hpp"
 #include "../../drv/fan_ctrl/fan_ctrl.hpp"
 #include "../../app/pwr_mon/pwr_mon.hpp"
+#include "../../app/ui/ui_joystick.hpp"
 
 /**************************************************************************
  *** Declarations
@@ -22,6 +23,7 @@ enum Monitor_Id{
     STEERING_SYSTEM,
     VEHICLE,
     POWER,
+    INPUT,
     DIAGNOSTIC
 };
 
@@ -44,6 +46,7 @@ static const Monitor_T monitors[] = {
     {STEERING_SYSTEM,   "STEERING_SYSTEM",  NULL,  steer_sys::export_data},
     {VEHICLE,           "VEHICLE",          NULL,  veh::export_data},
     {POWER,             "POWER",            NULL,  pwr_mon::export_data},
+    {INPUT,             "INPUT",            NULL,  ui_joystick::export_data},
     {DIAGNOSTIC,        "DIAGNOSTIC",       NULL,  dummy_app::get_mon_data},
 
 };
@@ -63,6 +66,7 @@ void ui_monitor::init(void){
     monitors[STEERING_SYSTEM].win =     newwin(STEERING_SYSTEM_WIN_HEIGHT,  STEERING_SYSTEM_WIN_WIDTH,  STEERING_SYSTEM_WIN_Y,  STEERING_SYSTEM_WIN_X   );
     monitors[VEHICLE].win =             newwin(VEHICLE_WIN_HEIGHT,          VEHICLE_WIN_WIDTH,          VEHICLE_WIN_Y,          VEHICLE_WIN_X           );
     monitors[POWER].win =               newwin(POWER_WIN_HEIGHT,            POWER_WIN_WIDTH,            POWER_WIN_Y,            POWER_WIN_X             );
+    monitors[INPUT].win =               newwin(INPUT_WIN_HEIGHT,            INPUT_WIN_WIDTH,            INPUT_WIN_Y,            INPUT_WIN_X             );
     monitors[DIAGNOSTIC].win =          newwin(DIAGNOSTIC_WIN_HEIGHT,       DIAGNOSTIC_WIN_WIDTH,       DIAGNOSTIC_WIN_Y,       DIAGNOSTIC_WIN_X        );
     
     LOG("SWC [ui_monitor] init\n");
