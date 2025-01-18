@@ -3,6 +3,7 @@
     Buzzer module implements inverted logic: LOW -> Buzzer ON, HIGH -> Buzzer OFF.
 */
 #include <iostream>
+#include <cstdint>
 #include <vector>
 #include "buzzer.hpp"
 #include "../../app/ui/ui_logging.hpp"

@@ -2,6 +2,7 @@
 #define CALIB_H
 
 #include <iostream>
+#include <cstdint>
 
 /* Steering System Driver */
 const uint8_t SS_DRV_LEFT_WHEEL_PWM = 27u;

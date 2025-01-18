@@ -81,7 +81,7 @@ void ui_monitor::run(void){
             update_monitor(monitors[i]);
         }
         box(monitors[i].win,0,0);
-        mvwprintw(monitors[i].win, 0, 4, monitors[i].name);
+        mvwprintw(monitors[i].win, 0, 4, "%s", monitors[i].name);
         wrefresh(monitors[i].win);
     }
 }
@@ -92,9 +92,9 @@ void ui_monitor::run(void){
 static void update_monitor(Monitor_T mon){
     std::vector<std::string> app_data = mon.get_app_data();
     for(uint8_t i=0u; i<app_data.size(); i+=2u){
-        mvwprintw(mon.win, (i/2u)+1, 1, app_data[i].c_str());
+        mvwprintw(mon.win, (i/2u)+1, 1, "%s", app_data[i].c_str());
         wprintw(mon.win, " : ");
-        wprintw(mon.win, app_data[i+1u].c_str());
+        wprintw(mon.win, "%s", app_data[i+1u].c_str());
         wprintw(mon.win, "   "); /* Clear previously used fields */
     }
 }
