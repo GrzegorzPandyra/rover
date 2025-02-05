@@ -1,8 +1,8 @@
 #include <iostream>
 #include <linux/joystick.h>
 #include "ui_joystick.hpp"
-#include "../../cfg/calib.hpp"
-#include "../ui/ui_logging.hpp"
+#include "cfg/calib.hpp"
+#include "ui_logging.hpp"
 
 static void axis_event_handler(js_event event);
 static void button_event_handler(js_event event);

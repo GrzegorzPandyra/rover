@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
 #include "dummy_app.hpp"
-#include "../ui/ui_logging.hpp"
+// #include "../ui/ui_logging.hpp"
 
 void dummy_app::dummy_app_init(void){
-    LOG("SWC [dummy_app] init\n");
+    // LOG("SWC [dummy_app] init\n");
 }
 
 void dummy_app::dummy_app_run(void){

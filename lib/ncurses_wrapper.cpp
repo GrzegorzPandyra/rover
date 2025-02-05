@@ -1,6 +1,6 @@
-#include "ncurses.hpp" 
+#include "ncurses_wrapper.hpp" 
 #include <ncurses.h>
-#include "../app/ui/ui_logging.hpp"
+// #include "../app/ui/ui_logging.hpp"
 
 void ncurses::init(void){
     initscr();
@@ -8,5 +8,5 @@ void ncurses::init(void){
     nodelay(stdscr, TRUE);
     scrollok(stdscr, TRUE);
     
-    LOG("LIB [ncurses] init\n");
+    // LOG("LIB [ncurses] init\n");
 }
