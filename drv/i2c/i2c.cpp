@@ -1,6 +1,6 @@
 #include <iostream>
 #include "i2c.hpp"
-#include "../ui/ui_logging.hpp"
+#include "ui_logging.hpp"
 #include <wiringPiI2C.h>
 
 void i2c::init(void){

@@ -11,13 +11,23 @@ add_subdirectory("lib")
 add_subdirectory("app/os")
 add_subdirectory("app/dummy_app")
 add_subdirectory("app/ui")
+add_subdirectory("app/veh")
+add_subdirectory("drv/i2c")
+add_subdirectory("drv/light_ctrl")
+add_subdirectory("drv/tacho")
+add_subdirectory("common/pwm_channel")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC os)
 target_link_libraries(${PROJECT_NAME} PUBLIC wiringPi)
 target_link_libraries(${PROJECT_NAME} PUBLIC ncurses)
 target_link_libraries(${PROJECT_NAME} PUBLIC lib)
 target_link_libraries(${PROJECT_NAME} PUBLIC ui)
+target_link_libraries(${PROJECT_NAME} PUBLIC veh)
 target_link_libraries(${PROJECT_NAME} PUBLIC dummy_app)
+target_link_libraries(${PROJECT_NAME} PUBLIC i2c)
+target_link_libraries(${PROJECT_NAME} PUBLIC light_ctrl)
+target_link_libraries(${PROJECT_NAME} PUBLIC tacho)
+target_link_libraries(${PROJECT_NAME} PUBLIC pwm_channel)
 
 target_include_directories(${PROJECT_NAME} PUBLIC 
     ${CMAKE_CURRENT_SOURCE_DIR}

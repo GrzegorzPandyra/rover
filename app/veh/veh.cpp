@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 #include "veh.hpp"
-#include "../ui/ui_logging.hpp"
-#include "../../drv/tacho/tacho.hpp"
+#include "ui_logging.hpp"
+#include "tacho.hpp"
 
 using namespace veh;
 

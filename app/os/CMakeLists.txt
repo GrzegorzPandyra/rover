@@ -13,4 +13,9 @@ target_include_directories( ${LIB_NAME} PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
     "../../"
     "../ui"
+    "../dummy_app"
+    "../../drv/i2c"
+    "../../drv/light_ctrl"
 )
+
+target_link_libraries(os PUBLIC light_ctrl)

@@ -9,11 +9,11 @@
 #include "ui_input.hpp"
 #include "ui_monitor.hpp"
 #include "ui_joystick.hpp"
-// #include "../app/dummy_app/dummy_app.hpp"
-// #include "../app/veh/veh.hpp"
+#include "dummy_app.hpp"
+#include "veh.hpp"
 // #include "../app/pwr_mon/pwr_mon.hpp"
-// #include "../drv/i2c/i2c.hpp"
-// #include "../drv/light_ctrl/light_ctrl.hpp"
+#include "i2c.hpp"
+#include "light_ctrl.hpp"
 // #include "../drv/steer_sys/steer_sys.hpp"
 // #include "../drv/pwtr/pwtr.hpp"
 // #include "../drv/fan_ctrl/fan_ctrl.hpp"
@@ -26,20 +26,20 @@
                             ui_input::init(); \
                             ui_monitor::init(); \
                             ui_joystick::init();\
-//                             i2c::init(); \
-//                             light_ctrl::init(); \
+                            dummy_app::dummy_app_init(); \
+                            i2c::init(); \
+                            light_ctrl::init(); \
+                            veh::init(); \
 //                             pwtr::init(); \
 //                             steer_sys::init(); \
-//                             dummy_app::dummy_app_init(); \
 //                             buzzer::init(); \
 //                             tacho::init(); \
-//                             veh::init(); \
 //                             fan_ctrl::init(); \
 //                             pwr_mon::init(); \
 //                             buzzer::buzz(50);
 
-// #define OS_TASK_1_MS_LIST() /* Add relevant function calls below */\
-//                             i2c::run(); \
+#define OS_TASK_1_MS_LIST() /* Add relevant function calls below */\
+                            i2c::run(); \
 //                             tacho::run();
 
 #define OS_TASK_5_MS_LIST() /* Add relevant function calls below */\
@@ -48,15 +48,15 @@
 
 #define OS_TASK_10_MS_LIST() /* Add relevant function calls below */\
                             ui_monitor::run(); \
+                            veh::run();
 //                             pwtr::run(); \
 //                             fan_ctrl::run(); \
 //                             steer_sys::run(); \
 //                             buzzer::run(); \
-//                             veh::run();
 //                             // dummy_app::dummy_app_run2();
 
-// #define OS_TASK_100_MS_LIST() /* Add relevant function calls below */\
-//                             light_ctrl::run();
+#define OS_TASK_100_MS_LIST() /* Add relevant function calls below */\
+                            light_ctrl::run();
                             
 
 #define OS_TASK_250_MS_LIST() /* Add relevant function calls below */\
@@ -70,8 +70,8 @@
 
 // #define OS_TASK_2000_MS_LIST() /* Add relevant function calls below */\
 
-// #define OS_TASK_5000_MS_LIST() /* Add relevant function calls below */\
-//                             dummy_app::dummy_app_run();
+#define OS_TASK_5000_MS_LIST() /* Add relevant function calls below */\
+                            dummy_app::dummy_app_run();
 
 
 namespace os_cfg{
