@@ -1,6 +1,6 @@
 #include "ina226.hpp"
-#include "../../drv/i2c/i2c_if.hpp"
-#include "../ui/ui_logging.hpp"
+#include "i2c_if.hpp"
+#include "ui_logging.hpp"
 
 /************************************************
  *             PUBLIC CLASS MEMBERS
@@ -61,6 +61,7 @@ uint16_t INA226::read_register(INA226::RegisterID reg){
     uint16_t result = (uint16_t) i2c::read_reg16(m_fd, reg);
     /* Data comes in reversed order */
     result = (result<<8) | (result>>8);
+    LOG_FORMATED_1("DIE ID = %d\n", result);
     return result;
 }
 

@@ -1,6 +1,6 @@
-#include "ncurses.hpp" 
+#include "ncurses_wrapper.hpp" 
 #include <ncurses.h>
-#include "../app/ui/ui_logging.hpp"
+#include "ui_logging.hpp"
 
 void ncurses::init(void){
     initscr();

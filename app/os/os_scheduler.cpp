@@ -1,8 +1,8 @@
 #include <iostream>
 #include "os_scheduler.hpp"
-#include "../../cfg/os_cfg.hpp"
+#include "cfg/os_cfg.hpp"
 #include <chrono>
-#include "../ui/ui_logging.hpp"
+#include "ui_logging.hpp"
 
 using namespace os_scheduler;
 

@@ -2,7 +2,7 @@
 #define LIGHT_CTRL_H
 
 #include <vector>
-#include "../../common/pwm_channel/pwm_channel.hpp"
+#include "pwm_channel.hpp"
 
 namespace light_ctrl{
     enum Light_T {

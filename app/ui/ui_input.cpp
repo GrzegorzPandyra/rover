@@ -1,14 +1,14 @@
 #include <iostream>
+#include <ncurses.h>
 #include "ui_input.hpp" 
 #include "ui_joystick.hpp" 
-#include "../../cfg/calib.hpp"
-#include <ncurses.h>
-#include "../ui/ui_logging.hpp"
-#include "../veh/veh.hpp"
-#include "../../drv/light_ctrl/light_ctrl.hpp"
-#include "../../drv/pwtr/pwtr.hpp"
-#include "../../drv/steer_sys/steer_sys.hpp"
-#include "../../drv/fan_ctrl/fan_ctrl.hpp"
+#include "ui_logging.hpp"
+#include "cfg/calib.hpp"
+#include "veh.hpp"
+#include "light_ctrl.hpp"
+#include "pwtr.hpp"
+#include "steer_sys.hpp"
+#include "fan_ctrl.hpp"
 
 static void process_console_input(char input);
 static void process_joystick_input();

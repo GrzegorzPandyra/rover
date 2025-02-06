@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2024
  */
 #include "i2c_device.hpp"
-#include "../../drv/i2c/i2c_if.hpp"
+#include "i2c_if.hpp"
 
 I2C_Device::I2C_Device(const int8_t addr)
                  /* Initialization list */ :

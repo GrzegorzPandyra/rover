@@ -5,7 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include "pwr_mon.hpp"
-#include "../../app/ui/ui_logging.hpp"
+#include "ui_logging.hpp"
 #include "pwr_mon_cfg.hpp"
 #include "ina226.hpp"
 #include "ina3221.hpp"

@@ -1,6 +1,6 @@
 #include "ina3221.hpp"
-#include "../../drv/i2c/i2c_if.hpp"
-#include "../ui/ui_logging.hpp"
+#include "i2c_if.hpp"
+#include "ui_logging.hpp"
 
 /************************************************
  *             PUBLIC CLASS MEMBERS

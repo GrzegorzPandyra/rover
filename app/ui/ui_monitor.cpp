@@ -1,17 +1,17 @@
 #include <iostream>
 #include <vector>
 #include <ncurses.h>
-#include "../../cfg/calib.hpp"
+#include "cfg/calib.hpp"
 #include "ui_monitor.hpp"
 #include "ui_logging.hpp"
-#include "../veh/veh.hpp"
-#include "../dummy_app/dummy_app.hpp"
-#include "../../drv/light_ctrl/light_ctrl.hpp"
-#include "../../drv/pwtr/pwtr.hpp"
-#include "../../drv/steer_sys/steer_sys.hpp"
-#include "../../drv/fan_ctrl/fan_ctrl.hpp"
-#include "../../app/pwr_mon/pwr_mon.hpp"
-#include "../../app/ui/ui_joystick.hpp"
+#include "ui_joystick.hpp"
+#include "dummy_app.hpp"
+#include "veh.hpp"
+#include "light_ctrl.hpp"
+#include "pwtr.hpp"
+#include "steer_sys.hpp"
+#include "fan_ctrl.hpp"
+#include "pwr_mon.hpp"
 
 /**************************************************************************
  *** Declarations

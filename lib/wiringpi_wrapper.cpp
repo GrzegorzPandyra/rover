@@ -1,6 +1,6 @@
 #include <wiringPi.h>
-#include "../app/ui/ui_logging.hpp"
-#include "wiringpi.hpp"
+#include "ui_logging.hpp"
+#include "wiringpi_wrapper.hpp"
 
 void wiringpi::init(void){
     wiringPiSetupGpio();

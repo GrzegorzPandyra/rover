@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 #include "steer_sys.hpp"
-#include "../../app/ui/ui_logging.hpp"
-#include "../../cfg/calib.hpp"
+#include "ui_logging.hpp"
+#include "cfg/calib.hpp"
 
 using namespace steer_sys;
 
