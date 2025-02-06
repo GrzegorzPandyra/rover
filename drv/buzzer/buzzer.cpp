@@ -6,8 +6,8 @@
 #include <cstdint>
 #include <vector>
 #include "buzzer.hpp"
-#include "../../app/ui/ui_logging.hpp"
-#include "../../cfg/calib.hpp"
+#include "ui_logging.hpp"
+#include "cfg/calib.hpp"
 #include <wiringPi.h>
 #include <softPwm.h>
 

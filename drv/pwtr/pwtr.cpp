@@ -2,11 +2,11 @@
 #include <vector>
 #include "pwtr.hpp"
 #include <wiringPi.h>
-#include "../../app/ui/ui_logging.hpp"
-#include "../../cfg/calib.hpp"
-#include "../veh/veh.hpp"
-#include "../tacho/tacho.hpp"
-#include "../fan_ctrl/fan_ctrl.hpp"
+#include "ui_logging.hpp"
+#include "cfg/calib.hpp"
+#include "veh.hpp"
+#include "tacho.hpp"
+#include "fan_ctrl.hpp"
 
 static void motor_rotation(void);
 

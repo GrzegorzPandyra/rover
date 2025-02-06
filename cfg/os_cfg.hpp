@@ -17,15 +17,14 @@
 #include "steer_sys.hpp"
 #include "pwtr.hpp"
 #include "fan_ctrl.hpp"
-// #include "../drv/buzzer/buzzer.hpp"
-// #include "../drv/tacho/tacho.hpp"
+#include "buzzer.hpp"
+#include "tacho.hpp"
 
 #define OS_TASK_INIT_LIST() /* Add relevant function calls below */\
                             ncurses::init(); \
                             wiringpi::init(); \
                             ui_input::init(); \
                             ui_monitor::init(); \
-                            ui_joystick::init();\
                             dummy_app::dummy_app_init(); \
                             i2c::init(); \
                             light_ctrl::init(); \
@@ -34,9 +33,10 @@
                             steer_sys::init(); \
                             pwtr::init(); \
                             fan_ctrl::init(); \
-//                             buzzer::init(); \
-//                             tacho::init(); \
-//                             buzzer::buzz(50);
+                            buzzer::init(); \
+                            tacho::init(); \
+                            buzzer::buzz(50);
+                            // ui_joystick::init();\
 
 #define OS_TASK_1_MS_LIST() /* Add relevant function calls below */\
                             i2c::run(); \
@@ -52,7 +52,7 @@
                             steer_sys::run(); \
                             pwtr::run(); \
                             fan_ctrl::run(); \
-//                             buzzer::run(); \
+                            buzzer::run(); \
 //                             // dummy_app::dummy_app_run2();
 
 #define OS_TASK_100_MS_LIST() /* Add relevant function calls below */\
@@ -60,15 +60,15 @@
                             
 
 #define OS_TASK_250_MS_LIST() /* Add relevant function calls below */\
-                            ui_joystick::run(); \
-                            pwr_mon::run();
+                            // pwr_mon::run(); \
+                            // ui_joystick::run(); \
 
 #define OS_TASK_500_MS_LIST() /* Add relevant function calls below */\
                             pwtr::expire_pwm();
 
-// #define OS_TASK_1000_MS_LIST() /* Add relevant function calls below */\
+#define OS_TASK_1000_MS_LIST() /* Add relevant function calls below */\
 
-// #define OS_TASK_2000_MS_LIST() /* Add relevant function calls below */\
+#define OS_TASK_2000_MS_LIST() /* Add relevant function calls below */\
 
 #define OS_TASK_5000_MS_LIST() /* Add relevant function calls below */\
                             dummy_app::dummy_app_run();

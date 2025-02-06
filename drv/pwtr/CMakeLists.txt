@@ -15,6 +15,8 @@ target_link_libraries(${LIB_NAME} PUBLIC fan_ctrl)
 target_include_directories( ${LIB_NAME} PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${ROOT_DIR}/app/ui"
+    "${ROOT_DIR}/app/veh"
     "${ROOT_DIR}/drv/fan_ctrl"
+    "${ROOT_DIR}/drv/tacho"
     "${ROOT_DIR}/common/pwm_channel"
 )

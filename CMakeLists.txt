@@ -19,6 +19,7 @@ add_subdirectory("drv/tacho")
 add_subdirectory("drv/steer_sys")
 add_subdirectory("drv/pwtr")
 add_subdirectory("drv/fan_ctrl")
+add_subdirectory("drv/buzzer")
 add_subdirectory("common/pwm_channel")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC os)
@@ -36,6 +37,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC pwr_mon)
 target_link_libraries(${PROJECT_NAME} PUBLIC steer_sys)
 target_link_libraries(${PROJECT_NAME} PUBLIC pwtr)
 target_link_libraries(${PROJECT_NAME} PUBLIC fan_ctrl)
+target_link_libraries(${PROJECT_NAME} PUBLIC buzzer)
 
 target_include_directories(${PROJECT_NAME} PUBLIC 
     ${CMAKE_CURRENT_SOURCE_DIR}

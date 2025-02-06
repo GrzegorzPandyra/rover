@@ -2,12 +2,11 @@ cmake_minimum_required(VERSION 3.16)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
-set(LIB_NAME "lib")
-set(ROOT_DIR "..")
+set(LIB_NAME "buzzer")
+set(ROOT_DIR "../..")
 
 add_library(${LIB_NAME} 
-    ncurses_wrapper.cpp
-    wiringpi_wrapper.cpp
+    "buzzer.cpp"
 )
 
 target_include_directories( ${LIB_NAME} PUBLIC

@@ -16,7 +16,7 @@ APP_DIR		= $(PROJECT_ROOT)/app
 DRV_DIR		= $(PROJECT_ROOT)/drv
 COMMON_DIR   = $(PROJECT_ROOT)/common
 LIB_DIR		= $(PROJECT_ROOT)/lib
-OUT_DIR		= $(PROJECT_ROOT)/out
+OUT_DIR		= $(PROJECT_ROOT)/build
 
 DRV_LIST = \
 pwtr \

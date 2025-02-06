@@ -15,4 +15,5 @@ add_library(${LIB_NAME}
 target_include_directories( ${LIB_NAME} PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${ROOT_DIR}/app/ui"
+    "${ROOT_DIR}/drv/i2c"
 )

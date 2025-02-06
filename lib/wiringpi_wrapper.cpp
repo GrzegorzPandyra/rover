@@ -1,5 +1,5 @@
 #include <wiringPi.h>
-// #include "../app/ui/ui_logging.hpp"
+#include "ui_logging.hpp"
 #include "wiringpi_wrapper.hpp"
 
 void wiringpi::init(void){
@@ -11,5 +11,5 @@ void wiringpi::init(void){
     pwmSetMode(PWM_MODE_MS);
     pwmSetClock(192);
     pwmSetRange(1024);
-    // LOG("LIB [wiringpi] init\n");
+    LOG("LIB [wiringpi] init\n");
 }
