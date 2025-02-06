@@ -2,7 +2,7 @@
 #define FAN_CTRL_H
 
 #include <vector>
-#include "../../common/pwm_channel/pwm_channel.hpp"
+#include "pwm_channel.hpp"
 
 namespace fan_ctrl{
 

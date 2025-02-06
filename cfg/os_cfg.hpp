@@ -11,12 +11,12 @@
 #include "ui_joystick.hpp"
 #include "dummy_app.hpp"
 #include "veh.hpp"
-// #include "../app/pwr_mon/pwr_mon.hpp"
+#include "pwr_mon.hpp"
 #include "i2c.hpp"
 #include "light_ctrl.hpp"
-// #include "../drv/steer_sys/steer_sys.hpp"
-// #include "../drv/pwtr/pwtr.hpp"
-// #include "../drv/fan_ctrl/fan_ctrl.hpp"
+#include "steer_sys.hpp"
+#include "pwtr.hpp"
+#include "fan_ctrl.hpp"
 // #include "../drv/buzzer/buzzer.hpp"
 // #include "../drv/tacho/tacho.hpp"
 
@@ -30,28 +30,28 @@
                             i2c::init(); \
                             light_ctrl::init(); \
                             veh::init(); \
-//                             pwtr::init(); \
-//                             steer_sys::init(); \
+                            pwr_mon::init(); \
+                            steer_sys::init(); \
+                            pwtr::init(); \
+                            fan_ctrl::init(); \
 //                             buzzer::init(); \
 //                             tacho::init(); \
-//                             fan_ctrl::init(); \
-//                             pwr_mon::init(); \
 //                             buzzer::buzz(50);
 
 #define OS_TASK_1_MS_LIST() /* Add relevant function calls below */\
                             i2c::run(); \
-//                             tacho::run();
+                            tacho::run(); \
 
 #define OS_TASK_5_MS_LIST() /* Add relevant function calls below */\
-                            ui_input::run();
+                            ui_input::run(); \
                             
 
 #define OS_TASK_10_MS_LIST() /* Add relevant function calls below */\
                             ui_monitor::run(); \
-                            veh::run();
-//                             pwtr::run(); \
-//                             fan_ctrl::run(); \
-//                             steer_sys::run(); \
+                            veh::run(); \
+                            steer_sys::run(); \
+                            pwtr::run(); \
+                            fan_ctrl::run(); \
 //                             buzzer::run(); \
 //                             // dummy_app::dummy_app_run2();
 
@@ -61,10 +61,10 @@
 
 #define OS_TASK_250_MS_LIST() /* Add relevant function calls below */\
                             ui_joystick::run(); \
-//                             pwr_mon::run();
+                            pwr_mon::run();
 
-// #define OS_TASK_500_MS_LIST() /* Add relevant function calls below */\
-//                             pwtr::expire_pwm();
+#define OS_TASK_500_MS_LIST() /* Add relevant function calls below */\
+                            pwtr::expire_pwm();
 
 // #define OS_TASK_1000_MS_LIST() /* Add relevant function calls below */\
 

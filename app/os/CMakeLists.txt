@@ -14,8 +14,12 @@ target_include_directories( ${LIB_NAME} PUBLIC
     "../../"
     "../ui"
     "../dummy_app"
+    "../pwr_mon"
     "../../drv/i2c"
     "../../drv/light_ctrl"
+    "../../drv/steer_sys"
+    "../../drv/pwtr"
+    "../../drv/fan_ctrl"
 )
 
 target_link_libraries(os PUBLIC light_ctrl)

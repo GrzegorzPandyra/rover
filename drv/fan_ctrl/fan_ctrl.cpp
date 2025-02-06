@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 #include "fan_ctrl.hpp"
-#include "../../app/ui/ui_logging.hpp"
-#include "../../cfg/calib.hpp"
+#include "ui_logging.hpp"
+#include "cfg/calib.hpp"
 
 using namespace fan_ctrl;
 
