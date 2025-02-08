@@ -13,6 +13,7 @@ class ThreadManager : public IComponent {
         static int PreInit();
         int Init();
         int DeInit();
+        std::vector<IComponent*>& GetCompVect(void);
 
     private:
         ThreadManager(SystemType st, std::string name);

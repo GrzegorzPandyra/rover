@@ -19,6 +19,7 @@ extern "C"
 }
 static void InitializeSingletons(void);
 static void CreateThreads(void);
+static void RunThread(IComponent::SystemType st);
 
 typedef void* (*threadPtr)(void * args);
 std::array<const threadPtr, 4> threadPool = 
@@ -32,39 +33,26 @@ std::array<const threadPtr, 4> threadPool =
 extern "C"
 {
     static void* primary_thread(void * data){
-        do
-        {
-            Logger::Log("Init", "Primary thread run");
-
-        } while(true);
+        Logger::Log("Init", "Primary thread started");
+        RunThread(IComponent::ST_PRIMARY);
         return NULL;
     }
 
     static void* secondary_thread(void * data){
-        do
-        {
-            Logger::Log("Init", "Secondary thread run");
-
-        } while(true);
+        Logger::Log("Init", "Secondary thread started");
+        RunThread(IComponent::ST_SECONDARY);;
         return NULL;
     }
 
     static void* auxiliary_thread(void * data){
-        do
-        {
-            Logger::Log("Init", "Auxiliary thread run");
-
-        } while(true);
+        Logger::Log("Init", "Auxiliary thread started");
+        RunThread(IComponent::ST_AUXILIARY);
         return NULL;
     }
-
+    
     static void* diagnostic_thread(void * data){
-        do
-        {
-            Logger::Log("Init", "Diagnostic thread run");
-            Logger::GetInstance().Logger::Run();
-
-        } while(true);
+        Logger::Log("Init", "Diagnostic thread started");
+        RunThread(IComponent::ST_DIAGNOSTIC);
         return NULL;
     }
 }
@@ -88,14 +76,23 @@ static void CreateThreads(void)
         {
             std::cout<<"ERROR: Failed to create thread - Init failed\n";
         }
-        else
-        {
-            std::cout<<"INFO: Created thread with PID:"<<getpid()<<"\n";
-        }
     }
 }
 
+static void RunThread(IComponent::SystemType st)
+{
+    do
+    {
+        for(auto& comp : ThreadManager::GetInstance().GetCompVect())
+        {
+            if(st == comp->GetSystemType())
+            {
+                comp->Run();
+            }
+        }
 
+    } while(true);
+}
 
 int main()
 {

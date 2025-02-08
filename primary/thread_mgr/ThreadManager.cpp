@@ -38,6 +38,11 @@ int ThreadManager::Stop()
     return 0;
 }
 
+std::vector<IComponent*>& ThreadManager::GetCompVect(void)
+{
+    return m_compVect;
+}
+
 /*static*/ void ThreadManager::RegComp(IComponent* comp)
 {
     m_threadManagerPtr->m_compVect.push_back(comp);
