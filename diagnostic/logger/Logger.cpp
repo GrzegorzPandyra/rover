@@ -1,5 +1,6 @@
 #include "Logger.hpp"
 #include <iostream>
+#include "ThreadManager.hpp"
 
 Logger* Logger::m_loggerPtr = nullptr;
 
@@ -16,7 +17,11 @@ Logger::~Logger()
 
 int Logger::Init()
 {
-    SetState(STATE_INIT);
+    if(STATE_INIT != GetState())
+    {
+        ThreadManager::RegComp(this);
+        SetState(STATE_INIT);
+    }
     return 0;
 }
 
@@ -57,8 +62,10 @@ int Logger::Stop()
 
 /*static*/ void Logger::Log(std::string origin, std::string content)
 {
+    m_loggerPtr->m_mtx.lock();
     Message msg = {origin, content};
     m_loggerPtr->m_dataBuffer.push_back(msg);
+    m_loggerPtr->m_mtx.unlock();
 }
 
 /*static*/ void Logger::Log(std::string content)

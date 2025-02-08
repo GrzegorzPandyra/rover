@@ -3,6 +3,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
 project(rover VERSION 1.0)
+set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wall")
 set(PRIMARY_DIR "primary")
 set(DIAGNOSTIC_DIR "diagnostic")
 

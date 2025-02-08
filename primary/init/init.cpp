@@ -10,46 +10,102 @@
 
  #define STATUS_OK 0
 
-extern "C"{
-    void* system_thread(void * data){
-        std::cout<<"system thread running\n";
-        while(1);
+extern "C"
+{
+    static void* primary_thread(void * data);
+    static void* secondary_thread(void * data);
+    static void* auxiliary_thread(void * data);
+    static void* diagnostic_thread(void * data);
+}
+static void InitializeSingletons(void);
+static void CreateThreads(void);
+
+typedef void* (*threadPtr)(void * args);
+std::array<const threadPtr, 4> threadPool = 
+{
+    primary_thread,
+    secondary_thread,
+    auxiliary_thread,
+    diagnostic_thread    
+};
+
+extern "C"
+{
+    static void* primary_thread(void * data){
+        do
+        {
+            Logger::Log("Init", "Primary thread run");
+
+        } while(true);
         return NULL;
     }
 
-    void* system_thread2(void * data){
-        std::cout<<"system2 thread running\n";
-        while(1);
+    static void* secondary_thread(void * data){
+        do
+        {
+            Logger::Log("Init", "Secondary thread run");
+
+        } while(true);
+        return NULL;
+    }
+
+    static void* auxiliary_thread(void * data){
+        do
+        {
+            Logger::Log("Init", "Auxiliary thread run");
+
+        } while(true);
+        return NULL;
+    }
+
+    static void* diagnostic_thread(void * data){
+        do
+        {
+            Logger::Log("Init", "Diagnostic thread run");
+            Logger::GetInstance().Logger::Run();
+
+        } while(true);
         return NULL;
     }
 }
 
-int main()
+static void InitializeSingletons(void)
+{
+    ThreadManager::PreInit();
+    ThreadManager::GetInstance().Init();
+    Logger::PreInit();
+    Logger::GetInstance().Init();
+}
+
+static void CreateThreads(void)
 {
     pthread_t pid = 0;
-    int status = pthread_create(&pid, NULL, system_thread, NULL);
-    if(STATUS_OK != status){
-        std::cout<<"ERROR: Failed to create System Manager thread - Init failed\n";
-    } else {
-        std::cout<<"INFO: Created System Manager thread with PID:"<<getpid()<<"\n";
-        ThreadManager::GetInstance();
-        ThreadManager::PreInit();
-        ThreadManager::GetInstance().Init();
-        ThreadManager::GetInstance();
-        ThreadManager::RegComp(&ThreadManager::GetInstance());
-        Logger::PreInit();
-        Logger::Log(Logger::Message{"LoggerName", "dupa"});
-        Logger::Log("LoggerName", "dupa2");
-        Logger::Log("dupa3");
-        Logger::GetInstance().Logger::Run();
-        Logger::GetInstance().Logger::Run();
-        Logger::GetInstance().Logger::Run();
-        Logger::GetInstance().Logger::Run();
-        Logger::GetInstance().Logger::Run();
-        Logger::GetInstance().Logger::Run();
-        while(1);
+    int status;
+    for(auto& th : threadPool)
+    {
+        status = pthread_create(&pid, NULL, th, NULL);
+        if(STATUS_OK != status)
+        {
+            std::cout<<"ERROR: Failed to create thread - Init failed\n";
+        }
+        else
+        {
+            std::cout<<"INFO: Created thread with PID:"<<getpid()<<"\n";
+        }
     }
-    std::cout<<"INFO: === Shutdown complete ===";
+}
+
+
+
+int main()
+{
+    
+    InitializeSingletons();
+    CreateThreads();
+
+    while(true);  
+
+    std::cout<<"INFO: === Shutdown complete ===\n";
 
     return 0;
 }   

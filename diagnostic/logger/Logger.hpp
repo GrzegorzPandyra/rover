@@ -4,6 +4,7 @@
 #include <deque>
 #include "ILogger.hpp"
 #include "IComponent.hpp"
+#include <mutex>
 
 class Logger : public ILogger, public IComponent {
     public:
@@ -23,6 +24,7 @@ class Logger : public ILogger, public IComponent {
         Logger(SystemType st, std::string name);
         static Logger* m_loggerPtr;
         std::deque<Message> m_dataBuffer;
+        std::mutex m_mtx;
         virtual void PureVirt(void){};
 };
 
