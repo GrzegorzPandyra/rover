@@ -1,19 +1,25 @@
 #ifndef STATUS_MON_H
 #define STATUS_MON_H
 
-#include <deque>
+#include <mutex>
 #include "IComponent.hpp"
+#include "IMonitor.hpp"
 
 class StatusMonitor : public IComponent {
     public:
-        StatusMonitor(SystemType st, std::string name);
+        StatusMonitor(const StatusMonitor&) = delete;
         ~StatusMonitor();
         int Init();
         int DeInit();
         int Run();
         int Stop();
+        static StatusMonitor& GetInstance(void);
+        static int PreInit();
 
     private:
+        StatusMonitor(SystemType st, std::string name);
+        static StatusMonitor* m_statusMonitorPtr;
+        std::mutex m_registerMutex;
 };
 
 #endif

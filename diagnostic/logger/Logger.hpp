@@ -2,9 +2,9 @@
 #define LOGGER_H
 
 #include <deque>
+#include <mutex>
 #include "ILogger.hpp"
 #include "IComponent.hpp"
-#include <mutex>
 
 class Logger : public ILogger, public IComponent {
     public:

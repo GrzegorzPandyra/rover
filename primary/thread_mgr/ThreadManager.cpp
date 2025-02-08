@@ -46,7 +46,7 @@ std::vector<IComponent*>& ThreadManager::GetCompVect(void)
 /*static*/ void ThreadManager::RegComp(IComponent* comp)
 {
     m_threadManagerPtr->m_compVect.push_back(comp);
-    std::cout<<"Thread Manager RegComp()\n";
+    std::cout<<"Thread Manager registered component "<<comp->GetName()<<"\n";
 }
 
 /*static*/ ThreadManager& ThreadManager::GetInstance(void)

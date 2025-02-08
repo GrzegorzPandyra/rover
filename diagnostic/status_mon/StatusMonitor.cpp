@@ -2,6 +2,7 @@
 #include "StatusMonitor.hpp"
 #include "ThreadManager.hpp"
 
+StatusMonitor* StatusMonitor::m_statusMonitorPtr = nullptr;
 
 StatusMonitor::StatusMonitor(SystemType st, std::string name) : IComponent(st, name)
 { 
@@ -11,6 +12,7 @@ StatusMonitor::StatusMonitor(SystemType st, std::string name) : IComponent(st, n
 
 StatusMonitor::~StatusMonitor()
 {
+    delete m_statusMonitorPtr;
 }
 
 int StatusMonitor::Init()
@@ -25,6 +27,7 @@ int StatusMonitor::Init()
 
 int StatusMonitor::DeInit()
 {
+    delete m_statusMonitorPtr;
     SetState(STATE_UNINIT);
     return 0;
 }
@@ -37,5 +40,20 @@ int StatusMonitor::Run()
 int StatusMonitor::Stop()
 {
     SetState(STATE_STOP);
+    return 0;
+}
+
+/*static*/ StatusMonitor& StatusMonitor::GetInstance(void)
+{
+    PreInit();
+    return *m_statusMonitorPtr;
+}
+
+/*static*/ int StatusMonitor::PreInit()
+{
+    if(nullptr == m_statusMonitorPtr)
+    {
+        m_statusMonitorPtr = new StatusMonitor(IComponent::ST_DIAGNOSTIC, "StatusMonitor");
+    }
     return 0;
 }

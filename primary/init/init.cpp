@@ -3,6 +3,7 @@
  #include <unistd.h>
  #include "ThreadManager.hpp"
  #include "Logger.hpp"
+ #include "StatusMonitor.hpp"
 
  #if __cplusplus < 201703L
  #error Invalid C++ version - expecting C++17 or higher
@@ -63,6 +64,8 @@ static void InitializeSingletons(void)
     ThreadManager::GetInstance().Init();
     Logger::PreInit();
     Logger::GetInstance().Init();
+    StatusMonitor::PreInit();
+    StatusMonitor::GetInstance().Init();
 }
 
 static void CreateThreads(void)
