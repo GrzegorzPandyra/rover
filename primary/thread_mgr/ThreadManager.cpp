@@ -3,7 +3,7 @@
 
 ThreadManager* ThreadManager::m_threadManagerPtr = nullptr;
 
-ThreadManager::ThreadManager(SystemType st) : IComponent(st)
+ThreadManager::ThreadManager(SystemType st, std::string name) : IComponent(st, name)
 { 
     SetState(STATE_UNINIT);
     std::cout<<"Thread Manager created\n";
@@ -54,7 +54,7 @@ int ThreadManager::Stop()
 {
     if(nullptr == m_threadManagerPtr)
     {
-        m_threadManagerPtr = new ThreadManager(IComponent::ST_PRIMARY);
+        m_threadManagerPtr = new ThreadManager(IComponent::ST_PRIMARY, "ThreadManager");
     }
     return 0;
 }

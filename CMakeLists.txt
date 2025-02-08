@@ -4,12 +4,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED true)
 
 project(rover VERSION 1.0)
 set(PRIMARY_DIR "primary")
+set(DIAGNOSTIC_DIR "diagnostic")
 
 add_executable(${PROJECT_NAME} "${PRIMARY_DIR}/init/init.cpp")
 
 
 # add_subdirectory("lib")
 add_subdirectory("${PRIMARY_DIR}/thread_mgr")
+add_subdirectory("${DIAGNOSTIC_DIR}/logger")
 # add_subdirectory("app/dummy_app")
 # add_subdirectory("app/ui")
 # add_subdirectory("app/veh")
@@ -25,7 +27,7 @@ add_subdirectory("${PRIMARY_DIR}/thread_mgr")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC pthread)
 target_link_libraries(${PROJECT_NAME} PUBLIC thread_mgr)
-# target_link_libraries(${PROJECT_NAME} PUBLIC wiringPi)
+target_link_libraries(${PROJECT_NAME} PUBLIC logger)
 # target_link_libraries(${PROJECT_NAME} PUBLIC ncurses)
 # target_link_libraries(${PROJECT_NAME} PUBLIC lib)
 # target_link_libraries(${PROJECT_NAME} PUBLIC ui)

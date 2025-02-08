@@ -2,6 +2,7 @@
  #include <iostream>
  #include <unistd.h>
  #include "ThreadManager.hpp"
+ #include "Logger.hpp"
 
  #if __cplusplus < 201703L
  #error Invalid C++ version - expecting C++17 or higher
@@ -36,6 +37,16 @@ int main()
         ThreadManager::GetInstance().Init();
         ThreadManager::GetInstance();
         ThreadManager::RegComp(&ThreadManager::GetInstance());
+        Logger::PreInit();
+        Logger::Log(Logger::Message{"LoggerName", "dupa"});
+        Logger::Log("LoggerName", "dupa2");
+        Logger::Log("dupa3");
+        Logger::GetInstance().Logger::Run();
+        Logger::GetInstance().Logger::Run();
+        Logger::GetInstance().Logger::Run();
+        Logger::GetInstance().Logger::Run();
+        Logger::GetInstance().Logger::Run();
+        Logger::GetInstance().Logger::Run();
         while(1);
     }
     std::cout<<"INFO: === Shutdown complete ===";

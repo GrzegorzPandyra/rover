@@ -15,7 +15,7 @@ class ThreadManager : public IComponent {
         int DeInit();
 
     private:
-        ThreadManager(SystemType st);
+        ThreadManager(SystemType st, std::string name);
         std::vector<IComponent*> m_compVect;
         static ThreadManager* m_threadManagerPtr;
         int Run();
