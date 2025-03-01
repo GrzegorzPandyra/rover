@@ -9,10 +9,10 @@ class IMonitor
     public:
         struct MonitorDimensions
         {
-            int x;
-            int y;
-            int width;
             int height;
+            int width;
+            int y;
+            int x;
         };
         IMonitor(MonitorDimensions mDims) : m_monDims(mDims){};
         virtual ~IMonitor(){};

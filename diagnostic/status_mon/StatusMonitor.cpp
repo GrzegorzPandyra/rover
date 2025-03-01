@@ -1,6 +1,8 @@
 #include <iostream>
 #include "StatusMonitor.hpp"
 #include "ThreadManager.hpp"
+#include "Logger.hpp"
+#include <ncurses.h>
 
 StatusMonitor* StatusMonitor::m_statusMonitorPtr = nullptr;
 
@@ -19,7 +21,8 @@ int StatusMonitor::Init()
 {
     if(STATE_INIT != GetState())
     {
-        ThreadManager::RegComp(this);
+        ThreadManager::RegisterComponent(this);
+        InitNCurses();
         SetState(STATE_INIT);
     }
     return 0;
@@ -34,6 +37,7 @@ int StatusMonitor::DeInit()
 
 int StatusMonitor::Run()
 {
+
     return 0;
 }
 
@@ -41,6 +45,14 @@ int StatusMonitor::Stop()
 {
     SetState(STATE_STOP);
     return 0;
+}
+
+void StatusMonitor::InitNCurses(void)
+{
+    initscr();
+    noecho();
+    nodelay(stdscr, TRUE);
+    scrollok(stdscr, TRUE);
 }
 
 /*static*/ StatusMonitor& StatusMonitor::GetInstance(void)
@@ -56,4 +68,11 @@ int StatusMonitor::Stop()
         m_statusMonitorPtr = new StatusMonitor(IComponent::ST_DIAGNOSTIC, "StatusMonitor");
     }
     return 0;
+}
+
+/*static*/ void StatusMonitor::RegisterMonitor(IMonitor* mon)
+{
+    m_statusMonitorPtr->m_registerMutex.lock();
+    m_statusMonitorPtr->m_monitorPtrVector.push_back(mon);
+    m_statusMonitorPtr->m_registerMutex.unlock();
 }

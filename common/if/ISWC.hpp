@@ -1,9 +1,9 @@
-#ifndef ICOMPONENT_H
-#define ICOMPONENT_H
+#ifndef ISWC_H
+#define ISWC_H
 
 #include <string>
 
-class IComponent
+class ISWC
 {
     public:
         enum SystemType
@@ -19,14 +19,14 @@ class IComponent
           STATE_UNINIT,
           STATE_STOP
         };
-        IComponent(SystemType st, std::string name) : SYSTEM_TYPE(st), NAME(name) {};
-        virtual ~IComponent(){};
+        ISWC(SystemType st, std::string name) : SYSTEM_TYPE(st), NAME(name) {};
+        virtual ~ISWC(){};
         virtual int Init() = 0;
         virtual int DeInit() = 0;
         virtual int Run() = 0;
         virtual int Stop() = 0;
-        SystemType GetSystemType(void){return SYSTEM_TYPE;};
-        std::string GetName(void){return NAME;};
+        SystemType GetSystemType(void) const {return SYSTEM_TYPE;};
+        std::string GetName(void) const {return NAME;};
         void SetState(State s){m_state = s;};
         State GetState(void){return m_state;};
         

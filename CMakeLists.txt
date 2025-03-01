@@ -4,17 +4,20 @@ set(CMAKE_CXX_STANDARD_REQUIRED true)
 
 project(rover VERSION 1.0)
 set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wall")
+set(CMAKE_CXX_FLAGS "-g -O0")
 set(PRIMARY_DIR "primary")
+set(SECONDARY_DIR "secondary")
+set(AUXILIARY_DIR "auxiliary")
 set(DIAGNOSTIC_DIR "diagnostic")
 
 add_executable(${PROJECT_NAME} "${PRIMARY_DIR}/init/init.cpp")
 
 
 # add_subdirectory("lib")
-add_subdirectory("${PRIMARY_DIR}/thread_mgr")
-add_subdirectory("${DIAGNOSTIC_DIR}/logger")
-add_subdirectory("${DIAGNOSTIC_DIR}/status_mon")
-# add_subdirectory("app/dummy_app")
+add_subdirectory("${PRIMARY_DIR}/SWC_ThreadMgr")
+# add_subdirectory("${DIAGNOSTIC_DIR}/logger")
+# add_subdirectory("${DIAGNOSTIC_DIR}/status_mon")
+# add_subdirectory("${SECONDARY_DIR}/steer_sys")
 # add_subdirectory("app/ui")
 # add_subdirectory("app/veh")
 # add_subdirectory("app/pwr_mon")
@@ -28,9 +31,10 @@ add_subdirectory("${DIAGNOSTIC_DIR}/status_mon")
 # add_subdirectory("common/pwm_channel")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC pthread)
-target_link_libraries(${PROJECT_NAME} PUBLIC thread_mgr)
-target_link_libraries(${PROJECT_NAME} PUBLIC logger)
-target_link_libraries(${PROJECT_NAME} PUBLIC status_mon)
+target_link_libraries(${PROJECT_NAME} PUBLIC SWC_ThreadMgr)
+# target_link_libraries(${PROJECT_NAME} PUBLIC logger)
+# target_link_libraries(${PROJECT_NAME} PUBLIC status_mon)
+# target_link_libraries(${PROJECT_NAME} PUBLIC steer_sys)
 # target_link_libraries(${PROJECT_NAME} PUBLIC ncurses)
 # target_link_libraries(${PROJECT_NAME} PUBLIC lib)
 # target_link_libraries(${PROJECT_NAME} PUBLIC ui)
@@ -46,7 +50,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC status_mon)
 # target_link_libraries(${PROJECT_NAME} PUBLIC fan_ctrl)
 # target_link_libraries(${PROJECT_NAME} PUBLIC buzzer)
 
-# target_include_directories(${PROJECT_NAME} PUBLIC 
-#     ${CMAKE_CURRENT_SOURCE_DIR}
-#     "app/ui"
-# )
+target_include_directories(${PROJECT_NAME} PUBLIC 
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${PRIMARY_DIR}/SWC_ThreadMgr/cfg
+)

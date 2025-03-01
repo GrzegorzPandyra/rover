@@ -5,6 +5,8 @@
 #include <cstdint>
 
 namespace cfg {
+    /* System */
+    constexpr int SYS_THREAD_SLEEP_NS = 500;
     
     /* Steering System Driver */
     const uint8_t SS_DRV_LEFT_WHEEL_PWM = 27u;

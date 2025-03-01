@@ -19,7 +19,7 @@ int Logger::Init()
 {
     if(STATE_INIT != GetState())
     {
-        ThreadManager::RegComp(this);
+        ThreadManager::RegisterComponent(this);
         SetState(STATE_INIT);
     }
     return 0;
@@ -57,7 +57,9 @@ int Logger::Stop()
 
 /*static*/ void Logger::Log(Message msg)
 {
+    m_loggerPtr->m_mtx.lock();
     m_loggerPtr->m_dataBuffer.push_back(msg);
+    m_loggerPtr->m_mtx.unlock();
 }
 
 /*static*/ void Logger::Log(std::string origin, std::string content)
@@ -70,8 +72,10 @@ int Logger::Stop()
 
 /*static*/ void Logger::Log(std::string content)
 {
+    m_loggerPtr->m_mtx.lock();
     Message msg = {"", content};
     m_loggerPtr->m_dataBuffer.push_back(msg);
+    m_loggerPtr->m_mtx.unlock();
 }
 
 
