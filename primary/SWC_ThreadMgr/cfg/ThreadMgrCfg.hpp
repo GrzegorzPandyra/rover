@@ -12,8 +12,4 @@ extern "C"
                                     
     #define THREAD_MGR_CFG_NUM_THREADS 4
 
-    void* primary_thread(void * data);
-    void* secondary_thread(void * data);
-    void* auxiliary_thread(void * data);
-    void* diagnostic_thread(void * data);
 }
