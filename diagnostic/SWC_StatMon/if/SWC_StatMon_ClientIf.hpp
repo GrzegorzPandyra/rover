@@ -5,7 +5,18 @@
 
 namespace SWC_StatMon::ClientIf
 {
+    typedef std::vector<std::string> (*MonitorCallback)();
+    struct MonitorProperties
+    {
+        int x;
+        int y;
+        int width;
+        int height;
+        MonitorCallback cbk;
+        std::string name;
+    };
 
+    SWC_Types::Status RegisterMonitor(MonitorProperties prop);
 }
 
 #endif

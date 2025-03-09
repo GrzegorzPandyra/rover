@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <mutex>
 #include "if/SWC_StatMon_ClientIf.hpp"
 #include "if/SWC_StatMon_SysIf.hpp"
 #include "if/SWC_Logger_ClientIf.hpp"
@@ -18,54 +19,33 @@ namespace SWC_StatMon
         void Run(void);
         void UpdateMonitor(Monitor mon);
 
-        enum MonitorId{
-            LIGHT_CONTROLLER = 0,
-            POWERTRAIN,
-            STEERING_SYSTEM,
-            VEHICLE,
-            POWER,
-            INPUT,
-            DIAGNOSTIC
-        };
-        
         struct Monitor {
-            MonitorId id;
             std::string name;
+            ClientIf::MonitorCallback cbk;
             mutable NCWindow* win;
-            std::vector<std::string> (*get_app_data)();
         };
 
 
-        SWC_Types::SWC statMon = {Run, STATMON_CFG_SWC_SYS_TYPE, STATMON_CFG_SWC_NAME};
-        static const Monitor monitors[] = {
-            {LIGHT_CONTROLLER,  "LIGHT_CONTROLLER", NULL,  nullptr},
-            {POWERTRAIN,        "POWERTRAIN",       NULL,  nullptr},
-            {STEERING_SYSTEM,   "STEERING_SYSTEM",  NULL,  nullptr},
-            {VEHICLE,           "VEHICLE",          NULL,  nullptr},
-            {POWER,             "POWER",            NULL,  nullptr},
-            {INPUT,             "INPUT",            NULL,  nullptr},
-            {DIAGNOSTIC,        "DIAGNOSTIC",       NULL,  nullptr},
-        
-        };
-        const uint8_t NUM_MONITORS = sizeof(monitors)/sizeof(monitors[0]);
+        SWC_Types::SWC swcData = {Run, STATMON_CFG_SWC_SYS_TYPE, STATMON_CFG_SWC_NAME};
+        std::vector<Monitor> monitors;
+        std::mutex registration_mtx;
 
         void Run(void)
         {
-            for(uint8_t i=0; i<NUM_MONITORS; i++){
-                UpdateMonitor(monitors[i]);
-                monitors[i].win->Refresh();
+            for(auto& mon : monitors){
+                UpdateMonitor(mon);
+                mon.win->Refresh();
             }
         }
 
         void UpdateMonitor(Monitor mon){
-            if(nullptr != mon.get_app_data)
+            if(nullptr != mon.cbk)
             {
-                std::vector<std::string> app_data = mon.get_app_data();
-                for(uint8_t i=0u; i<app_data.size(); i+=2u){
-                    // mvwprintw(mon.win, (i/2u)+1, 1, "%s", app_data[i].c_str());
-                    // wprintw(mon.win, " : ");
-                    // wprintw(mon.win, "%s", app_data[i+1u].c_str());
-                    // wprintw(mon.win, "   "); /* Clear previously used fields */
+                int i=1;
+                std::vector<std::string> monData = mon.cbk();
+                for(auto& str : monData)
+                {
+                    mon.win->Print(1, i++, str);
                 }
             }
         }
@@ -80,14 +60,7 @@ namespace SWC_StatMon
     
         SWC_Types::Status Init()
         {
-            monitors[LIGHT_CONTROLLER].win =    NCurses::CreateWindow(LIGHT_CONTROLLER_WIN_X, LIGHT_CONTROLLER_WIN_Y, LIGHT_CONTROLLER_WIN_WIDTH,  LIGHT_CONTROLLER_WIN_HEIGHT, monitors[LIGHT_CONTROLLER].name );
-            monitors[POWERTRAIN].win =          NCurses::CreateWindow(POWERTRAIN_WIN_X,       POWERTRAIN_WIN_Y,       POWERTRAIN_WIN_WIDTH,        POWERTRAIN_WIN_HEIGHT,       monitors[POWERTRAIN].name       );
-            monitors[STEERING_SYSTEM].win =     NCurses::CreateWindow(STEERING_SYSTEM_WIN_X,  STEERING_SYSTEM_WIN_Y,  STEERING_SYSTEM_WIN_WIDTH,   STEERING_SYSTEM_WIN_HEIGHT,  monitors[STEERING_SYSTEM].name  );
-            monitors[VEHICLE].win =             NCurses::CreateWindow(VEHICLE_WIN_X,          VEHICLE_WIN_Y,          VEHICLE_WIN_WIDTH,           VEHICLE_WIN_HEIGHT,          monitors[VEHICLE].name          );
-            monitors[POWER].win =               NCurses::CreateWindow(POWER_WIN_X,            POWER_WIN_Y,            POWER_WIN_WIDTH,             POWER_WIN_HEIGHT,            monitors[POWER].name            );
-            monitors[INPUT].win =               NCurses::CreateWindow(INPUT_WIN_X,            INPUT_WIN_Y,            INPUT_WIN_WIDTH,             INPUT_WIN_HEIGHT,            monitors[INPUT].name            );
-            monitors[DIAGNOSTIC].win =          NCurses::CreateWindow(DIAGNOSTIC_WIN_X,       DIAGNOSTIC_WIN_Y,       DIAGNOSTIC_WIN_WIDTH,        DIAGNOSTIC_WIN_HEIGHT,       monitors[DIAGNOSTIC].name       );
-            SWC_ThreadMgr::ClientIf::RegisterSWC(&statMon);
+            SWC_ThreadMgr::ClientIf::RegisterSWC(&swcData);
             INFO(STATMON_CFG_SWC_NAME "SWC init complete");
             return SWC_Types::STATUS_OK;
         }
@@ -95,5 +68,17 @@ namespace SWC_StatMon
 
     namespace ClientIf
     {
+        SWC_Types::Status RegisterMonitor(MonitorProperties prop)
+        {
+            std::lock_guard<std::mutex> lock(registration_mtx);
+            Monitor mon = 
+            {
+                prop.name,
+                prop.cbk,
+                NCurses::CreateWindow(prop.x, prop.y, prop.width, prop.height, prop.name)
+            };
+            monitors.push_back(mon);
+            return SWC_Types::STATUS_OK;
+        }
     }
 }
