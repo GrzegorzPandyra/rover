@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <array>
 #include <mutex>
 #include "if/SWC_Veh_ClientIf.hpp"
 #include "if/SWC_Veh_SysIf.hpp"
@@ -17,6 +18,7 @@ namespace SWC_Veh
     {
         void Run(void);
         SWC_Types::SWC swcData = {Run, VehCfg::SYSTEM_TYPE, VehCfg::SWC_NAME};
+        ClientIf::PRND currentGear = ClientIf::PRND_N;
 
         void Run(void)
         {
@@ -25,13 +27,26 @@ namespace SWC_Veh
         std::vector<std::string> MonitorData(void)
         {
             std::vector<std::string> result;
-            const char PRND_STR[][3] = {"R", "N", "D1", "D2", "D3"};
-            result.push_back("PRND : ");
-            // result.push_back(PRND_STR[mgr.prnd]);
-            result.push_back("RPS : ");
-            result.push_back("RPS22: ");
+            std::array<std::string, 5> gears = {"R", "N", "D1", "D2", "D3"};
+            result.push_back("PRND : "+gears[currentGear]);
+            result.push_back("RPS: OFFLINE");
             // result.push_back(std::to_string(mgr.rps).substr(0, 4));
             return result;
+        }
+
+        /* Overload increment/decrement operators to perfoerm these ops on PRND enums */
+        ClientIf::PRND& operator++(ClientIf::PRND& val)
+        {
+            const int i = static_cast<int>(val);
+            val = static_cast<ClientIf::PRND>(i+1);
+            return val;
+        }
+
+        ClientIf::PRND& operator--(ClientIf::PRND& val)
+        {
+            const int i = static_cast<int>(val);
+            val = static_cast<ClientIf::PRND>(i-1);
+            return val;
         }
     }
     
@@ -60,6 +75,28 @@ namespace SWC_Veh
 
     namespace ClientIf
     {
+        PRND ShiftUp(void)
+        {
+            if(currentGear < ClientIf::PRND_D3) ++currentGear;
+            return currentGear;
+        }
+
+        PRND ShiftDown(void)
+        {
+            if(currentGear > ClientIf::PRND_R) --currentGear;
+            return currentGear;
+        }
+
+        PRND GetGear(void)
+        {
+            return currentGear;
+        }
+
+        PRND SetGear(PRND gear)
+        {
+            currentGear = gear;
+            return currentGear;
+        }
 
     }
 }
