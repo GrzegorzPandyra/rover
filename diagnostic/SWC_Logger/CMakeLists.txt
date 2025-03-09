@@ -14,4 +14,5 @@ target_include_directories( ${LIB_NAME} PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}"
     "${ROOT_DIR}/common"
     "${ROOT_DIR}/primary/SWC_ThreadMgr"
+    "${ROOT_DIR}/lib/NCurses"
 )

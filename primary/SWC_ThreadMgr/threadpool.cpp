@@ -5,8 +5,6 @@
 #include "threadrunner.hpp"
 #include "SWC_Logger_ClientIf.hpp"
 
-using namespace SWC_Logger::ClientIf;
-
 extern "C"
 {
     void* primary_thread(void * data);

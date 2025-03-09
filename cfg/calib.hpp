@@ -4,7 +4,6 @@
 #include <iostream>
 #include <cstdint>
 
-namespace cfg {
     /* System */
     constexpr int SYS_THREAD_SLEEP_NS = 500;
     
@@ -160,6 +159,5 @@ namespace cfg {
     const int16_t JS_AXIS_MAX = 32767;
     const char    JS_DEV_PATH[] = "/dev/input/js0";
 
-} /* namespace cfg */
 
 #endif /* CALIB_H */

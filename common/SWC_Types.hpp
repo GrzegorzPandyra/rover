@@ -6,8 +6,8 @@ namespace SWC_Types
 {
     enum Status
     {
-        OK,
-        ERROR
+        STATUS_OK,
+        STATUS_ERROR
     };
 
     typedef void (*RunCallbackPtr)(void);

@@ -1,10 +1,11 @@
+#include <iostream>
+#include <queue>
+#include <mutex>
 #include "if/SWC_Logger_ClientIf.hpp"
 #include "if/SWC_Logger_SysIf.hpp"
 #include "if/SWC_ThreadMgr_ClientIf.hpp"
 #include "cfg/LoggerCfg.hpp"
-#include <iostream>
-#include <queue>
-#include <mutex>
+#include "if/NCurses.hpp"
 namespace SWC_Logger
 {
     namespace 
@@ -27,7 +28,7 @@ namespace SWC_Logger
             if(!logBuff.buff.empty())
             {
                 std::lock_guard<std::mutex> mtx(logBuff.mtx);
-                std::cout<<logBuff.buff.front();
+                NCurses::StdPrint(logBuff.buff.front());
                 logBuff.buff.pop();
             }
         }
@@ -39,14 +40,14 @@ namespace SWC_Logger
     {
         SWC_Types::Status Stop()
         {
-            return SWC_Types::OK;
+            return SWC_Types::STATUS_OK;
         }
     
         SWC_Types::Status Init()
         {
             SWC_ThreadMgr::ClientIf::RegisterSWC(&logger);
             INFO(LOGGER_CFG_SWC_NAME "SWC init complete");
-            return SWC_Types::OK;
+            return SWC_Types::STATUS_OK;
         }
     }
 
@@ -57,7 +58,7 @@ namespace SWC_Logger
             if(logBuff.buff.size() <= LOGGER_CFG_SWC_MAX_LOGS)
             {
                 std::lock_guard<std::mutex> mtx(logBuff.mtx);
-                logBuff.buff.push(filepath+":"+std::to_string(line)+" "+s+"\n");
+                logBuff.buff.push(filepath+":"+std::to_string(line)+"\t"+s+"\n");
             }
         }
 
@@ -65,7 +66,7 @@ namespace SWC_Logger
         {
             if(logBuff.buff.size() <= LOGGER_CFG_SWC_MAX_LOGS)
             {
-                logBuff.buff.push(filepath+":"+std::to_string(line)+" "+ss.str()+"\n");
+                logBuff.buff.push(filepath+":"+std::to_string(line)+"\t"+ss.str()+"\n");
                 std::lock_guard<std::mutex> mtx(logBuff.mtx);
             }
         }

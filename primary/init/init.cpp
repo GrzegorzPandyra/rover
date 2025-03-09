@@ -1,7 +1,9 @@
 #include <iostream>
 #include <unistd.h>
 #include "if/SWC_ThreadMgr_SysIf.hpp"
+#include "if/NCurses.hpp"
 #include "if/SWC_Logger_SysIf.hpp"
+#include "if/SWC_StatMon_SysIf.hpp"
 
 #if __cplusplus < 201703L
 #error Invalid C++ version - expecting C++17 or higher
@@ -9,12 +11,12 @@
 
 int main()
 {
-    std::cout<<"INFO: === START ===\n";
+    NCurses::Init();
     SWC_ThreadMgr::Init();
     SWC_Logger::SysIf::Init();
+    SWC_StatMon::SysIf::Init();
 
     while(true);  
-    std::cout<<"INFO: === Shutdown complete ===\n";
 
     return 0;
 }

@@ -6,7 +6,7 @@ using namespace SWC_Logger::ClientIf;
 
 namespace SWC_ThreadMgr::ThreadRunner
 {
-    std::vector<SWC_Types::SWC*>* swcPoolPtr;
+    SwcPool* swcPoolPtr;
 
     void RunThread(SWC_Types::SystemType systype)
     {
@@ -15,7 +15,8 @@ namespace SWC_ThreadMgr::ThreadRunner
 
         do
         {
-            for(auto& swc : *swcPoolPtr)
+            std::lock_guard<std::mutex> lock(swcPoolPtr->mtx);
+            for(auto& swc : swcPoolPtr->swcs)
             {
                 if((systype == swc->systemType))
                 {
@@ -27,7 +28,7 @@ namespace SWC_ThreadMgr::ThreadRunner
         } while(true);
     }
 
-    void SetSWCPool(std::vector<SWC_Types::SWC*>* swcPool)
+    void SetSWCPool(SwcPool* swcPool)
     {
         swcPoolPtr = swcPool;
     }
