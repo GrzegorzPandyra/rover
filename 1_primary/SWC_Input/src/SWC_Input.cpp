@@ -86,6 +86,10 @@ namespace SWC::Input {
             return result;
         }
 
+        /***************************************************************
+         *                 Button-handling callbacks
+         ***************************************************************/
+
         void ForwardCbk(void){
             SWC::Veh::InputIf::Forward();
         }

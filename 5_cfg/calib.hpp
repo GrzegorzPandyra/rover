@@ -74,10 +74,7 @@
     const uint8_t POWER_WIN_Y = 1u;
     const uint8_t POWER_WIN_X =  142u;
 
-    const uint8_t INPUT_WIN_HEIGHT =  10u;
-    const uint8_t INPUT_WIN_WIDTH =  40u;
-    const uint8_t INPUT_WIN_Y = 11u;
-    const uint8_t INPUT_WIN_X =  142u;
+
 
     const uint8_t DIAGNOSTIC_WIN_HEIGHT =  21u;
     const uint8_t DIAGNOSTIC_WIN_WIDTH =  40u;
@@ -86,28 +83,7 @@
 
     /* Logging */
 
-    /* Joystick */
-    const uint8_t JS_BTN_X = 3;
-    const uint8_t JS_BTN_Y = 4;
-    const uint8_t JS_BTN_A = 0;
-    const uint8_t JS_BTN_B = 1;
-    const uint8_t JS_BTN_R1 = 7;
-    const uint8_t JS_BTN_R2 = 9;
-    const uint8_t JS_BTN_L1 = 6;
-    const uint8_t JS_BTN_L2 = 8;
-    const uint8_t JS_BTN_LSTICK = 13;
-    const uint8_t JS_BTN_RSTICK = 14;
-    const uint8_t JS_BTN_SELECT = 10;
-    const uint8_t JS_BTN_START = 11;
-    const uint8_t JS_AXIS_LSTICK_H = 0;
-    const uint8_t JS_AXIS_LSTICK_V = 1;
-    const uint8_t JS_AXIS_RSTICK_H = 2;
-    const uint8_t JS_AXIS_RSTICK_V = 3;
-    const uint8_t JS_AXIS_DPAD_H = 6;
-    const uint8_t JS_AXIS_DPAD_V = 7;
-    const int16_t JS_AXIS_MIN = -32767;
-    const int16_t JS_AXIS_MAX = 32767;
-    const char    JS_DEV_PATH[] = "/dev/input/js0";
+
 
 
 #endif /* CALIB_H */

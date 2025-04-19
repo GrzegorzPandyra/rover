@@ -4,6 +4,7 @@
 namespace GlobalTypes
 {
     typedef void (*GenericCbk)(void);
+    typedef void (*PadAxisCbk)(int);
 
     enum CallResult
     {

@@ -3,7 +3,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 set(CMAKE_CXX_FLAGS "-g -O0 -fmacro-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}/=")
 
-set(LIB_NAME "SWC_Template")
+set(LIB_NAME "SWC_PadInput")
 set(ROOT_DIR                 ../..          )
 set(INIT_DIR        ${ROOT_DIR}/0_init      )
 set(PRIMARY_DIR     ${ROOT_DIR}/1_primary   )
@@ -15,7 +15,7 @@ set(COMMON_DIR      ${ROOT_DIR}/6_common    )
 set(LIBRARY_DIR     ${ROOT_DIR}/7_lib       )
 
 add_library(${LIB_NAME} 
-    "src/SWC_Template.cpp"
+    "src/SWC_PadInput.cpp"
 )
 
 target_include_directories( ${LIB_NAME} PUBLIC
@@ -24,7 +24,13 @@ target_include_directories( ${LIB_NAME} PUBLIC
     ${COMMON_DIR}
     ${PRIMARY_DIR}/SWC_ThreadMgr
     ${DIAGNOSTIC_DIR}/SWC_Logger
+    ${DIAGNOSTIC_DIR}/SWC_StatMon
+    ${PRIMARY_DIR}/SWC_Veh
+    ${SECONDARY_DIR}/SWC_Buzzer
 )
 
 target_link_libraries(${LIB_NAME} PUBLIC SWC_ThreadMgr  )
 target_link_libraries(${LIB_NAME} PUBLIC SWC_Logger     )
+target_link_libraries(${LIB_NAME} PUBLIC SWC_StatMon    )
+target_link_libraries(${LIB_NAME} PUBLIC SWC_Veh        )
+target_link_libraries(${LIB_NAME} PUBLIC SWC_Buzzer     )

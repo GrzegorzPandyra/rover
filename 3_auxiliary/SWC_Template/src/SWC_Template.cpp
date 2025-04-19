@@ -8,16 +8,12 @@
 /* Other includes */
 #include "TemplateCfg.hpp"
 
-namespace SWC::Template
-{
-    namespace 
-    {
+namespace SWC::Template {
+    namespace {
         void Run(void);
 
-        struct 
-        {
-            SWC::Types::SwcContext swcCtx =
-            {
+        struct{
+            SWC::Types::SwcContext swcCtx = {
                 Cfg::SWC_NAME, 
                 Cfg::SWC_SYSTEM_TYPE,
                 SWC::Types::INIT,
@@ -25,8 +21,7 @@ namespace SWC::Template
             };
         } ccb; /* Component Control Block */ 
         
-        void Run(void)
-        {
+        void Run(void){
         }
     }
     
