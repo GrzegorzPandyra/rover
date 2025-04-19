@@ -17,7 +17,7 @@ namespace SWC::PadInput {
     namespace {
 
         void Run(void);
-        void ReadDeviceFile(FILE* file);
+        void ReadDeviceFile();
         void BtnXCbk(void);
         void BtnYCbk(void);
         void BtnACbk(void);
@@ -70,18 +70,20 @@ namespace SWC::PadInput {
             };
 
             FILE *padFile = nullptr;
+            bool isPadConnected = false;
         } ccb; /* Component Control Block */ 
         
         void Run(void){
-            ReadDeviceFile(ccb.padFile);
+            ReadDeviceFile();
         }
         
         std::vector<std::string> MonitorData(void)
         {
-            using std::string;
-            using std::to_string;
-
             std::vector<std::string> result;
+
+            if(!ccb.isPadConnected){
+                result.emplace_back(" =Pad no connected= ");
+            }
 
             result.emplace_back("^ Forward       : ^ ");
             result.emplace_back("< Turn Left     : < ");
@@ -98,8 +100,8 @@ namespace SWC::PadInput {
             return result;
         }
 
-        void ReadDeviceFile(FILE* file){
-            if(file == nullptr){
+        void ReadDeviceFile(){
+            if(ccb.padFile == nullptr){
                 ERROR("Invalid file handler");
                 return;
             }
@@ -111,7 +113,7 @@ namespace SWC::PadInput {
                 &eventData,
                 sizeof(/*Joystick::*/js_event),
                 1,
-                file);
+                ccb.padFile);
             switch (eventData.type){
                 case /*Joystick::*/JS_EVENT_BUTTON:
                     if(eventData.value == Cfg::BUTTON_PRESSED){
@@ -194,9 +196,11 @@ namespace SWC::PadInput {
         void DPadHCbk(int val){
             if(val == Cfg::PAD_AXIS_MIN){
                 INFO("DpadH - left");
+                Veh::InputIf::TurnLeft();
             }
             if(val == Cfg::PAD_AXIS_MAX){
                 INFO("DpadH - right");
+                Veh::InputIf::TurnRight();
             }
             
         }
@@ -204,9 +208,11 @@ namespace SWC::PadInput {
         void DPadVCbk(int val){
             if(val == Cfg::PAD_AXIS_MIN){
                 INFO("DpadV - up");
+                Veh::InputIf::Forward();
             }
             if(val == Cfg::PAD_AXIS_MAX){
                 INFO("DpadV - down");
+                Veh::InputIf::Backward();
             }
         }
 
@@ -248,9 +254,11 @@ namespace SWC::PadInput::SysIf {
         ccb.padFile = fopen(Cfg::DEVICE_PATH,"w+b");
         if(ccb.padFile == nullptr){
             ERROR("Failed to get handle for pad device");
+            ccb.isPadConnected = false;
             return GlobalTypes::CALL_ERROR;
         } else {
             INFO(std::string(Cfg::SWC_NAME) + " SWC init complete");
+            ccb.isPadConnected = true;
             return GlobalTypes::CALL_OK;
         }
     }
