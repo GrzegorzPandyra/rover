@@ -11,6 +11,7 @@
 #include "ThreadMgr_ClientIf.hpp"
 #include "StatMon_ClientIf.hpp"
 #include "Buzzer_BuzzIf.hpp"
+#include "Lights_LightControlIf.hpp"
 /* Other includes */
 #include "InputCfg.hpp"
 #include "GlobalTypes.hpp"
@@ -32,6 +33,12 @@ namespace SWC::Input {
         void BuzzerCbk(void);
         void IncFanSpeedCbk(void);
         void DecFanSpeedCbk(void);
+        void HeadLightInc(void);
+        void HeadLightDec(void);
+        void RoofLightInc(void);
+        void RoofLightDec(void);
+        void RearLightInc(void);
+        void RearLightDec(void);
 
         struct {
                 Types::SwcContext swcCtx = {
@@ -42,19 +49,24 @@ namespace SWC::Input {
             };
 
             const std::unordered_map<char, GlobalTypes::GenericCbk> FUNCTION_MAP = {
-                {Cfg::KEY_FORWARD       , ForwardCbk           },
-                {Cfg::KEY_BACKWARD      , BackwardCbk          },
-                {Cfg::KEY_TURN_RIGHT    , TurnRightCbk         },
-                {Cfg::KEY_TURN_LEFT     , TurnLeftCbk          },
-                {Cfg::KEY_STOP          , StopCbk              },
-                {Cfg::KEY_PWM_AUTO_DEC  , PwmAutoDecrementCbk  },
-                {Cfg::KEY_HARDSTART     , HardstartCbk         },
-                {Cfg::KEY_SHIFT_UP      , ShiftUpCbk           },
-                {Cfg::KEY_SHIFT_DOWN    , ShiftDownCbk         },
-                {Cfg::KEY_SHUTDOWN      , ShutdownCbk          },
-                {Cfg::KEY_BUZZER        , BuzzerCbk            },
-                {Cfg::KEY_FAN_SPEED_INC , IncFanSpeedCbk       },
-                {Cfg::KEY_FAN_SPEED_DEC , DecFanSpeedCbk       },
+                {Cfg::KEY_FORWARD          , ForwardCbk           },
+                {Cfg::KEY_BACKWARD         , BackwardCbk          },
+                {Cfg::KEY_TURN_RIGHT       , TurnRightCbk         },
+                {Cfg::KEY_TURN_LEFT        , TurnLeftCbk          },
+                {Cfg::KEY_STOP             , StopCbk              },
+                {Cfg::KEY_PWM_AUTO_DEC     , PwmAutoDecrementCbk  },
+                {Cfg::KEY_HARDSTART        , HardstartCbk         },
+                {Cfg::KEY_SHIFT_UP         , ShiftUpCbk           },
+                {Cfg::KEY_SHIFT_DOWN       , ShiftDownCbk         },
+                {Cfg::KEY_SHUTDOWN         , ShutdownCbk          },
+                {Cfg::KEY_BUZZER           , BuzzerCbk            },
+                {Cfg::KEY_FAN_SPEED_INC    , IncFanSpeedCbk       },
+                {Cfg::KEY_HEADLIGHT_PWM_INC, HeadLightInc         },
+                {Cfg::KEY_HEADLIGHT_PWM_DEC, HeadLightDec         },
+                {Cfg::KEY_ROOFLIGHT_PWM_INC, RoofLightInc         },
+                {Cfg::KEY_ROOFLIGHT_PWM_DEC, RoofLightDec         },
+                {Cfg::KEY_REARLIGHT_PWM_INC, RearLightInc         },
+                {Cfg::KEY_REARLIGHT_PWM_DEC, RearLightDec         }
             };
         } ccb; /* Component Control Block */ 
 
@@ -143,6 +155,29 @@ namespace SWC::Input {
             Veh::InputIf::FanSlowDown();
         }
 
+        void HeadLightInc(void){
+            Lights::LightControl::IncLightPWM(Lights::LightControl::HEADLIGHT);
+        }
+
+        void HeadLightDec(void){
+            Lights::LightControl::DecLightPWM(Lights::LightControl::HEADLIGHT);
+        }
+
+        void RoofLightInc(void){
+            Lights::LightControl::IncLightPWM(Lights::LightControl::ROOFLIGHT);
+        }
+
+        void RoofLightDec(void){
+            Lights::LightControl::DecLightPWM(Lights::LightControl::ROOFLIGHT);
+        }
+
+        void RearLightInc(void){
+            Lights::LightControl::IncLightPWM(Lights::LightControl::REARLIGHT);
+        }
+
+        void RearLightDec(void){
+            Lights::LightControl::DecLightPWM(Lights::LightControl::REARLIGHT);
+        }
     }
 }
 

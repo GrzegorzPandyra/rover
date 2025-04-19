@@ -13,6 +13,7 @@
 #include "Tacho_SysIf.hpp"
 #include "Fan_SysIf.hpp"
 #include "PadInput_SysIf.hpp"
+#include "Lights_SysIf.hpp"
 
 #if __cplusplus < 201703L
 #error Invalid C++ version - expecting C++17 or higher
@@ -32,6 +33,7 @@ int main()
     SWC::Tacho::SysIf::Init();
     SWC::Fan::SysIf::Init();
     SWC::PadInput::SysIf::Init();
+    SWC::Lights::SysIf::Init();
     SWC::ThreadMgr::SysIf::Init(); /* Must be last */
 
     return 0;

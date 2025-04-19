@@ -31,12 +31,12 @@ namespace SWC::Input::Cfg
     constexpr char KEY_FAN_SPEED_INC = ']';
     constexpr char KEY_FAN_SPEED_DEC = '[';
     
-    constexpr char KEY_HEADLIGHT_PWM_INC = '+';
-    constexpr char KEY_HEADLIGHT_PWM_DEC = '-';
-    constexpr char KEY_ROOFLIGHT_PWM_INC = '*';
-    constexpr char KEY_ROOFLIGHT_PWM_DEC = '/';
-    constexpr char KEY_REARLIGHT_PWM_INC = ',';
-    constexpr char KEY_REARLIGHT_PWM_DEC = '0';
+    constexpr char KEY_HEADLIGHT_PWM_INC = '1';
+    constexpr char KEY_HEADLIGHT_PWM_DEC = '2';
+    constexpr char KEY_ROOFLIGHT_PWM_INC = '3';
+    constexpr char KEY_ROOFLIGHT_PWM_DEC = '4';
+    constexpr char KEY_REARLIGHT_PWM_INC = '5';
+    constexpr char KEY_REARLIGHT_PWM_DEC = '6';
     
     constexpr char KEY_SHUTDOWN = '.';
     
